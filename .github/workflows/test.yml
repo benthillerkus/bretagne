@@ -41,7 +41,7 @@ jobs:
           # Pull LFS objects
           git lfs pull
 
-      - run: godot --import
+      - run: godot --headless --import
       
       - name: Test
         run: |
