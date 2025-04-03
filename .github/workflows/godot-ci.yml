@@ -33,8 +33,13 @@ jobs:
           echo $(pwd)
           # https://github.com/actions/checkout/issues/415#issuecomment-2143700018
           git lfs install --skip-repo
-          # disable credentials by actions/checkout for LFS endpoints
-          git config --local http.https://lfs.bent.party/.extraheader "AUTHORIZATION: basic $LFS_PAT"
+          # Create a script to provide the LFS_PAT for authentication
+          echo "#!/bin/sh" > lfs-auth.sh
+          echo "echo username=unused" >> lfs-auth.sh
+          echo "echo password=$LFS_PAT" >> lfs-auth.sh
+          chmod +x lfs-auth.sh
+          export GIT_ASKPASS="$(pwd)/lfs-auth.sh"
+          # Pull LFS objects
           git lfs pull
       
       - name: Setup
