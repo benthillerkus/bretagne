@@ -72,6 +72,8 @@ jobs:
         with:
           name: windows
           path: build/windows
+      
+      - run: ls -la build/windows
 
       - name: Create Release and Upload Build
         uses: ncipollo/release-action@v1
