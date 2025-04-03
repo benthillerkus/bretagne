@@ -73,7 +73,10 @@ jobs:
           name: windows
           path: build/windows
       
-      - run: ls -la build/windows
+      - name: Zip artifacts
+        working-directory: build
+        run: |
+          zip -r windows.zip windows
 
       - name: Create Release and Upload Build
         uses: ncipollo/release-action@v1
@@ -85,4 +88,4 @@ jobs:
           name: Release ${{ github.ref_name }}
           body: |
             Automated release for tag ${{ github.ref_name }}.
-          artifacts: build/windows/$EXPORT_NAME.zip
+          artifacts: build/windows.zip
