@@ -34,15 +34,8 @@ jobs:
           echo $(pwd)
           # https://github.com/actions/checkout/issues/415#issuecomment-2143700018
           git lfs install --skip-repo
-          # Create a script to provide the LFS_PAT for authentication
-          echo "#!/bin/sh" > lfs-auth.sh
-          echo "case \"$1\" in" >> lfs-auth.sh
-          echo "  username) echo unused ;;" >> lfs-auth.sh
-          echo "  password) echo $LFS_PAT ;;" >> lfs-auth.sh
-          echo "esac" >> lfs-auth.sh
-          chmod +x lfs-auth.sh
-          export GIT_ASKPASS="$(pwd)/lfs-auth.sh"
-          git config --global credential.helper cache
+          # Configure Git to use the LFS_PAT for authentication
+          git config --local http.https://lfs.bent.party/.extraheader "Authorization: Bearer $LFS_PAT"
           # Pull LFS objects
           git lfs pull
       
