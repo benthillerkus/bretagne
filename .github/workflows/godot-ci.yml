@@ -25,7 +25,7 @@ jobs:
           LFS_PAT: ${{ secrets.LFS_PAT }}
         run: |
           # https://github.com/actions/checkout/issues/415#issuecomment-2143700018
-          git lfs install --local
+          git lfs install --skip-repo
           # disable credentials by actions/checkout for LFS endpoints
           git config credential.helper store
           echo "https://lfs.bent.party/benthillerkus/bretagne.git/ $LFS_PAT" > ~/.git-credentials
