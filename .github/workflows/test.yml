@@ -40,6 +40,8 @@ jobs:
           git config --local http.https://lfs.bent.party/.extraheader "Authorization: Bearer $LFS_PAT"
           # Pull LFS objects
           git lfs pull
+
+      - run: godot --import
       
       - name: Test
         run: |
