@@ -77,4 +77,4 @@ jobs:
           name: Release ${{ github.ref_name }}
           body: |
             Automated release for tag ${{ github.ref_name }}.
-          artifacts: build/windows/$EXPORT_NAME.exe
+          artifacts: $EXPORT_NAME.zip
