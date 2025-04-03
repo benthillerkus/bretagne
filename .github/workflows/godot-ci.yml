@@ -35,8 +35,10 @@ jobs:
           git lfs install --skip-repo
           # Create a script to provide the LFS_PAT for authentication
           echo "#!/bin/sh" > lfs-auth.sh
-          echo "echo username=unused" >> lfs-auth.sh
-          echo "echo password=$LFS_PAT" >> lfs-auth.sh
+          echo "case \"$1\" in" >> lfs-auth.sh
+          echo "  username) echo unused ;;" >> lfs-auth.sh
+          echo "  password) echo $LFS_PAT ;;" >> lfs-auth.sh
+          echo "esac" >> lfs-auth.sh
           chmod +x lfs-auth.sh
           export GIT_ASKPASS="$(pwd)/lfs-auth.sh"
           # Pull LFS objects
