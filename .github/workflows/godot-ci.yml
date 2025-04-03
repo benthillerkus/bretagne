@@ -67,6 +67,12 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: windows
+          path: build/windows
+
       - name: Create Release and Upload Build
         uses: ncipollo/release-action@v1
         with:
@@ -77,4 +83,4 @@ jobs:
           name: Release ${{ github.ref_name }}
           body: |
             Automated release for tag ${{ github.ref_name }}.
-          artifacts: $EXPORT_NAME.zip
+          artifacts: build/windows/$EXPORT_NAME.zip
