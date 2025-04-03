@@ -29,6 +29,7 @@ jobs:
         env:
           LFS_PAT: ${{ secrets.LFS_PAT }}
         working-directory: ${{ github.workspace }}
+        timeout-minutes: 2
         run: |
           echo $(pwd)
           # https://github.com/actions/checkout/issues/415#issuecomment-2143700018
