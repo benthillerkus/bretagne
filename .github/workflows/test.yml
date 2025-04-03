@@ -43,7 +43,7 @@ jobs:
       
       - name: Test
         run: |
-          godot --headless -d -s --path "$PWD" addons/gut/gut_cmdln.gd -gjunit_xml_file "$GITHUB_WORKSPACE/junit.xml"
+          godot --headless -d -s --path "$PWD" addons/gut/gut_cmdln.gd -gjunit_xml_file "$GITHUB_WORKSPACE/junit.xml" -gdir=res://test/ -gprefix=test_
 
       - name: Upload test results to Codecov
         if: ${{ !cancelled() }}
