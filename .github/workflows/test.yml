@@ -49,7 +49,12 @@ jobs:
           godot --headless -d -s --path "$PWD" addons/gut/gut_cmdln.gd -gjunit_xml_file "$GITHUB_WORKSPACE/junit.xml" -gdir=res://test/ -gprefix=test_ | while read -r line; do
             echo "$line"
             if [ "$(echo "$line" | grep 'Results saved to')" ]; then
-              (sleep 2 && kill $(ps -ef | grep '[d]art' | awk '{print $2}') && echo killed dead process) &
+              PID=$(ps -ef | grep '[g]odot' | awk '{print $2}')
+              if [ -n "$PID" ]; then
+                (sleep 2 && kill "$PID" && echo "Killed process with PID $PID") &
+              else
+                echo "No matching process found to kill"
+              fi
               exit 0
             fi
           done
