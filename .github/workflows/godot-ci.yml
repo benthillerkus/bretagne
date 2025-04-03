@@ -42,6 +42,7 @@ jobs:
           echo "esac" >> lfs-auth.sh
           chmod +x lfs-auth.sh
           export GIT_ASKPASS="$(pwd)/lfs-auth.sh"
+          git config --global credential.helper cache
           # Pull LFS objects
           git lfs pull
       
