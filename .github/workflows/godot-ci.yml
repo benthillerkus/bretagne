@@ -19,16 +19,18 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: false
+          
       
       - name: Pull LFS
         env:
           LFS_PAT: ${{ secrets.LFS_PAT }}
+        working-directory: ${{ github.workspace }}
         run: |
+          echo $(pwd)
           # https://github.com/actions/checkout/issues/415#issuecomment-2143700018
           git lfs install --skip-repo
           # disable credentials by actions/checkout for LFS endpoints
-          git config credential.helper store
-          echo "https://lfs.bent.party/benthillerkus/bretagne.git/ $LFS_PAT" > ~/.git-credentials
+          git config --local http.https://lfs.bent.party/.extraheader AUTHORIZATION: basic $LFS_PAT
           git lfs pull
       
       - name: Setup
