@@ -1,0 +1,71 @@
+[gd_scene load_steps=11 format=3 uid="uid://c4483m7phi100"]
+
+[ext_resource type="PackedScene" uid="uid://dto485kfikfgd" path="res://features/captcha/captcha_2d.tscn" id="1_dy1yx"]
+[ext_resource type="Script" uid="uid://i8wrmj6u8833" path="res://features/captcha/captcha_3d.gd" id="1_srrbl"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_rvnj8"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8qr3u"]
+resource_local_to_scene = true
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_rvnj8")
+
+[sub_resource type="QuadMesh" id="QuadMesh_1bvp3"]
+size = Vector2(0.646209, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1bvp3"]
+size = Vector3(0.646209, 1, 0.0341797)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_srrbl"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_srrbl"]
+material = SubResource("StandardMaterial3D_srrbl")
+size = Vector3(1, 1, 0.15)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e7j2f"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_e7j2f"]
+material = SubResource("StandardMaterial3D_e7j2f")
+size = Vector3(0.2, 0.75, 0.15)
+
+[node name="Captcha3D" type="Node3D"]
+script = ExtResource("1_srrbl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+layers = 2
+material_override = SubResource("StandardMaterial3D_8qr3u")
+cast_shadow = 0
+gi_mode = 0
+mesh = SubResource("QuadMesh_1bvp3")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_1bvp3")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+use_hdr_2d = true
+size = Vector2i(537, 831)
+size_2d_override = Vector2i(1074, 1662)
+
+[node name="Captcha2D" parent="SubViewport" instance=ExtResource("1_dy1yx")]
+
+[node name="Cursor" type="Node3D" parent="."]
+
+[node name="Node3D" type="Node3D" parent="Cursor"]
+transform = Transform3D(-0.223751, -0.111514, 2.18557e-08, -0.105521, 0.211725, -0.0808555, 0.0360661, -0.072366, -0.236564, 0, 0, 0.0221515)
+
+[node name="Pointy" type="MeshInstance3D" parent="Cursor/Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+layers = 2
+gi_mode = 0
+mesh = SubResource("PrismMesh_srrbl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cursor/Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.72529e-09, -1.37026, 0)
+layers = 2
+gi_mode = 0
+mesh = SubResource("BoxMesh_e7j2f")
+
+[connection signal="resized" from="SubViewport/Captcha2D" to="." method="_update_size" flags=3]

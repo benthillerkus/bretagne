@@ -1,0 +1,61 @@
+[gd_scene load_steps=11 format=3 uid="uid://cgsfn1yx1qenx"]
+
+[ext_resource type="Script" uid="uid://di4u2gg06htf6" path="res://addons/Basic FPS Player/Src/basic_player_startup.gd" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://baekn863wcxe7" path="res://game.gd" id="1_lquwl"]
+[ext_resource type="PackedScene" uid="uid://kmyakts4l64t" path="res://addons/Basic FPS Player/Src/basic_player_head.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://bkp1vmox56or0" path="res://features/pause/pause.tscn" id="3_h2yge"]
+[ext_resource type="PackedScene" uid="uid://c4483m7phi100" path="res://features/captcha/captcha_3d.tscn" id="4_1bvp3"]
+[ext_resource type="Resource" uid="uid://cex80oammhue1" path="res://features/captcha/puzzles/drews.tres" id="6_7mycd"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_1bvp3"]
+
+[sub_resource type="Sky" id="Sky_lquwl"]
+sky_material = SubResource("PhysicalSkyMaterial_1bvp3")
+
+[sub_resource type="Environment" id="Environment_7mycd"]
+background_mode = 2
+sky = SubResource("Sky_lquwl")
+ambient_light_source = 3
+reflected_light_source = 2
+tonemap_mode = 1
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1bvp3"]
+radius = 0.25
+height = 1.25
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_lquwl")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7mycd")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.711517, -0.447235, 0.541965, 0.12941, 0.841506, 0.52452, -0.69065, -0.303068, 0.656621, 0, 4.75, 0.125)
+light_energy = 10.004
+shadow_enabled = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, -4.5)
+use_collision = true
+size = Vector3(4, 0.5, 11)
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("1_0xm2m")
+MOUSE_ACCEL = false
+metadata/_custom_type_script = "uid://di4u2gg06htf6"
+
+[node name="Head" parent="Player" instance=ExtResource("2_h2yge")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.375, 0)
+shape = SubResource("CapsuleShape3D_1bvp3")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 99
+
+[node name="Pause" parent="HUD" instance=ExtResource("3_h2yge")]
+
+[node name="Captcha3D" parent="." instance=ExtResource("4_1bvp3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.125, -0.875)
+puzzle = ExtResource("6_7mycd")

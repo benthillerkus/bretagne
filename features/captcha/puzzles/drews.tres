@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Captcha" load_steps=3 format=3 uid="uid://cex80oammhue1"]
+
+[ext_resource type="Script" uid="uid://0m11q0crx85g" path="res://features/captcha/captcha.gd" id="1_2jnmw"]
+[ext_resource type="Texture2D" uid="uid://dv884l6nnif6s" path="res://features/captcha/tvstar.png" id="2_kc1vi"]
+
+[resource]
+script = ExtResource("1_2jnmw")
+texture = ExtResource("2_kc1vi")
+prompt = "Wähle alle Felder mit dem
+[b]Jürgen Drews[/b]
+Falls es keine gibt, klicke [i]überspringen[/i]."
+rows = 4
+columns = 4
+solution = PackedByteArray(0, 5, 9, 11)
+metadata/_custom_type_script = "uid://0m11q0crx85g"

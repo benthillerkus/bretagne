@@ -1,0 +1,173 @@
+[gd_scene load_steps=25 format=3 uid="uid://dto485kfikfgd"]
+
+[ext_resource type="FontFile" uid="uid://chbqm3ng5klra" path="res://assets/Roboto-Regular.ttf" id="1_1skmj"]
+[ext_resource type="Script" uid="uid://db5dkppnjpelc" path="res://features/captcha/captcha_2d.gd" id="1_5qoyj"]
+[ext_resource type="StyleBox" uid="uid://bid704rf07l28" path="res://features/captcha/selected_box.stylebox" id="1_d5nfq"]
+[ext_resource type="Texture2D" uid="uid://dv884l6nnif6s" path="res://features/captcha/tvstar.png" id="2_f2fjg"]
+[ext_resource type="FontFile" uid="uid://daxtfrtv6d4ga" path="res://assets/Roboto-Bold.ttf" id="2_gjt7f"]
+[ext_resource type="StyleBox" uid="uid://vvgu6525umvs" path="res://features/captcha/confirm_button.stylebox" id="6_gjt7f"]
+[ext_resource type="Script" uid="uid://b6oyblc0pe3m7" path="res://features/captcha/captcha_2d_control.gd" id="6_u78rm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_86pyw"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fjq1y"]
+content_margin_left = 40.0
+content_margin_top = 40.0
+content_margin_right = 40.0
+content_margin_bottom = 40.0
+bg_color = Color(0.371399, 0.654749, 0.982774, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d5nfq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f2fjg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f2fjg"]
+bg_color = Color(0.935902, 0.361539, 0.62296, 1)
+corner_detail = 1
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2kp12"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ohvx8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u78rm"]
+atlas = ExtResource("2_f2fjg")
+region = Rect2(147.5, 0, 216.667, 216.667)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3025y"]
+atlas = ExtResource("2_f2fjg")
+region = Rect2(364.167, 0, 216.667, 216.667)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a20xw"]
+atlas = ExtResource("2_f2fjg")
+region = Rect2(580.833, 0, 216.667, 216.667)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ps72"]
+atlas = ExtResource("2_f2fjg")
+region = Rect2(147.5, 216.667, 216.667, 216.667)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frvrk"]
+atlas = ExtResource("2_f2fjg")
+region = Rect2(364.167, 216.667, 216.667, 216.667)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w3gvq"]
+atlas = ExtResource("2_f2fjg")
+region = Rect2(580.833, 216.667, 216.667, 216.667)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ncpwt"]
+atlas = ExtResource("2_f2fjg")
+region = Rect2(147.5, 433.333, 216.667, 216.667)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rft36"]
+atlas = ExtResource("2_f2fjg")
+region = Rect2(364.167, 433.333, 216.667, 216.667)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oer4a"]
+atlas = ExtResource("2_f2fjg")
+region = Rect2(580.833, 433.333, 216.667, 216.667)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_xl2hn"]
+color = Color(0.912289, 0.912289, 0.912289, 1)
+thickness = 2
+
+[node name="Captcha2D" type="PanelContainer"]
+offset_right = 536.0
+offset_bottom = 831.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_86pyw")
+script = ExtResource("1_5qoyj")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fjq1y")
+
+[node name="Instructions" type="RichTextLabel" parent="MarginContainer/VBoxContainer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_1skmj")
+theme_override_fonts/bold_font = ExtResource("2_gjt7f")
+theme_override_font_sizes/normal_font_size = 18
+theme_override_font_sizes/bold_font_size = 36
+bbcode_enabled = true
+text = "Wähle alle Felder mit dem
+[b]Jürgen Drews[/b]
+Falls es keine gibt, klicke [i]überspringen[/i]."
+fit_content = true
+autowrap_mode = 0
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Captcha2DControl" type="ItemList" parent="MarginContainer/VBoxContainer/CenterContainer"]
+unique_name_in_owner = true
+clip_contents = false
+layout_mode = 2
+theme_override_constants/outline_size = 0
+theme_override_constants/v_separation = 3
+theme_override_constants/line_separation = 0
+theme_override_constants/icon_margin = 0
+theme_override_constants/h_separation = 3
+theme_override_styles/focus = SubResource("StyleBoxEmpty_d5nfq")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_f2fjg")
+theme_override_styles/hovered = SubResource("StyleBoxFlat_f2fjg")
+theme_override_styles/hovered_selected = ExtResource("1_d5nfq")
+theme_override_styles/hovered_selected_focus = ExtResource("1_d5nfq")
+theme_override_styles/selected = ExtResource("1_d5nfq")
+theme_override_styles/selected_focus = ExtResource("1_d5nfq")
+theme_override_styles/cursor_unfocused = SubResource("StyleBoxEmpty_2kp12")
+theme_override_styles/cursor = SubResource("StyleBoxEmpty_ohvx8")
+select_mode = 2
+auto_width = true
+auto_height = true
+item_count = 9
+max_columns = 3
+same_column_width = true
+fixed_icon_size = Vector2i(168, 168)
+item_0/icon = SubResource("AtlasTexture_u78rm")
+item_1/icon = SubResource("AtlasTexture_3025y")
+item_2/icon = SubResource("AtlasTexture_a20xw")
+item_3/icon = SubResource("AtlasTexture_2ps72")
+item_4/icon = SubResource("AtlasTexture_frvrk")
+item_5/icon = SubResource("AtlasTexture_w3gvq")
+item_6/icon = SubResource("AtlasTexture_ncpwt")
+item_7/icon = SubResource("AtlasTexture_rft36")
+item_8/icon = SubResource("AtlasTexture_oer4a")
+script = ExtResource("6_u78rm")
+rows = 3
+columns = 3
+texture = ExtResource("2_f2fjg")
+selected_scale = 0.7
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+theme_override_styles/separator = SubResource("StyleBoxLine_xl2hn")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Spacer" type="Container" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_gjt7f")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/focus = ExtResource("6_gjt7f")
+theme_override_styles/normal = ExtResource("6_gjt7f")
+text = "ÜBERSPRINGEN"
+
+[connection signal="multi_selected" from="MarginContainer/VBoxContainer/CenterContainer/Captcha2DControl" to="." method="_on_control_selection_changed" unbinds=2]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Button" to="." method="_on_skip_pressed"]
