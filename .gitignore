@@ -8,3 +8,7 @@
 # GUT
 test_report.xml
 junit.xml
+
+# Gaea
+assets/terrain/**/report.json
+assets/terrain/**/report.txt

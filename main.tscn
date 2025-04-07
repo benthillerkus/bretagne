@@ -1,27 +1,78 @@
-[gd_scene load_steps=11 format=3 uid="uid://cgsfn1yx1qenx"]
+[gd_scene load_steps=17 format=3 uid="uid://cgsfn1yx1qenx"]
 
-[ext_resource type="Script" uid="uid://di4u2gg06htf6" path="res://addons/Basic FPS Player/Src/basic_player_startup.gd" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://baekn863wcxe7" path="res://game.gd" id="1_lquwl"]
 [ext_resource type="PackedScene" uid="uid://kmyakts4l64t" path="res://addons/Basic FPS Player/Src/basic_player_head.tscn" id="2_h2yge"]
 [ext_resource type="PackedScene" uid="uid://bkp1vmox56or0" path="res://features/pause/pause.tscn" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c4483m7phi100" path="res://features/captcha/captcha_3d.tscn" id="4_1bvp3"]
 [ext_resource type="Resource" uid="uid://cex80oammhue1" path="res://features/captcha/puzzles/drews.tres" id="6_7mycd"]
+[ext_resource type="PackedScene" uid="uid://bm17pinf318kf" path="res://assets/terrain/beach/Mesher.glb" id="7_272bh"]
 
-[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_1bvp3"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_272bh"]
+ground_bottom_color = Color(0.154823, 0.178501, 0.195903, 1)
 
 [sub_resource type="Sky" id="Sky_lquwl"]
-sky_material = SubResource("PhysicalSkyMaterial_1bvp3")
+sky_material = SubResource("ProceduralSkyMaterial_272bh")
 
 [sub_resource type="Environment" id="Environment_7mycd"]
 background_mode = 2
+background_energy_multiplier = 1.89
 sky = SubResource("Sky_lquwl")
 ambient_light_source = 3
 reflected_light_source = 2
-tonemap_mode = 1
+tonemap_white = 2.14
+fog_enabled = true
+fog_sun_scatter = 0.51
+fog_density = 0.0869
+fog_sky_affect = 0.851
+adjustment_brightness = 1.27
+adjustment_contrast = 0.84
+adjustment_saturation = 0.01
+
+[sub_resource type="GDScript" id="GDScript_272bh"]
+script/source = "extends \"res://addons/Basic FPS Player/Src/basic_player_startup.gd\"
+
+func _process(delta: float) -> void:
+  super._process(delta)
+  RenderingServer.global_shader_parameter_set(\"player_position\", position)
+  
+"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1bvp3"]
 radius = 0.25
 height = 1.25
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7mycd"]
+fractal_ping_pong_strength = 2.915
+cellular_jitter = 0.785
+cellular_return_type = 2
+domain_warp_enabled = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_272bh"]
+seamless = true
+as_normal_map = true
+normalize = false
+noise = SubResource("FastNoiseLite_7mycd")
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7mycd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_272bh"]
+transparency = 1
+blend_mode = 4
+albedo_color = Color(0, 0, 0, 0)
+metallic_specular = 0.15
+roughness = 0.08
+normal_enabled = true
+normal_scale = 0.06
+normal_texture = SubResource("NoiseTexture2D_272bh")
+rim_texture = SubResource("NoiseTexture2D_7mycd")
+refraction_enabled = true
+refraction_scale = 0.02
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5vw27"]
+material = SubResource("StandardMaterial3D_272bh")
+size = Vector2(25, 25)
+subdivide_width = 50
+subdivide_depth = 50
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_lquwl")
@@ -30,18 +81,13 @@ script = ExtResource("1_lquwl")
 environment = SubResource("Environment_7mycd")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.711517, -0.447235, 0.541965, 0.12941, 0.841506, 0.52452, -0.69065, -0.303068, 0.656621, 0, 4.75, 0.125)
-light_energy = 10.004
+transform = Transform3D(0.0147555, -0.530542, 0.847528, 0.12941, 0.841506, 0.52452, -0.991482, 0.101941, 0.0810749, 0, 4.75, 0.125)
 shadow_enabled = true
-
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, -4.5)
-use_collision = true
-size = Vector3(4, 0.5, 11)
+directional_shadow_mode = 1
 
 [node name="Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-script = ExtResource("1_0xm2m")
+script = SubResource("GDScript_272bh")
 MOUSE_ACCEL = false
 metadata/_custom_type_script = "uid://di4u2gg06htf6"
 
@@ -59,3 +105,12 @@ layer = 99
 [node name="Captcha3D" parent="." instance=ExtResource("4_1bvp3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.125, -0.875)
 puzzle = ExtResource("6_7mycd")
+
+[node name="Mesher" parent="." instance=ExtResource("7_272bh")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, -1.375, -4)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.625, 0)
+cast_shadow = 0
+gi_mode = 0
+mesh = SubResource("PlaneMesh_5vw27")

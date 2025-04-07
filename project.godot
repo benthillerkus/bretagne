@@ -29,6 +29,10 @@ run/main_scene="uid://cgsfn1yx1qenx"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://config/icon.svg"
 
+[display]
+
+window/stretch/aspect="ignore"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/Basic FPS Player/plugin.cfg", "res://addons/captcha_resource_inspector/plugin.cfg", "res://addons/gut/plugin.cfg", "res://addons/resources_spreadsheet_view/plugin.cfg")
@@ -50,3 +54,18 @@ copy_path="res://"
 [rendering]
 
 renderer/rendering_method="mobile"
+
+[shader_globals]
+
+wind_intensity={
+"type": "float",
+"value": 0.0
+}
+wind_direction={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
+}
+player_position={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
+}
