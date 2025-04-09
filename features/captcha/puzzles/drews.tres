@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_2jnmw")
 texture = ExtResource("2_kc1vi")
-prompt = "Wähle alle Felder mit dem
+prompt = "Wähle alle Felder mit dem einzigen
 [b]Jürgen Drews[/b]
 Falls es keine gibt, klicke [i]überspringen[/i]."
 rows = 4

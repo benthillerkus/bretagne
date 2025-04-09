@@ -1,10 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://cgsfn1yx1qenx"]
+[gd_scene load_steps=18 format=3 uid="uid://cgsfn1yx1qenx"]
 
 [ext_resource type="Script" uid="uid://baekn863wcxe7" path="res://game.gd" id="1_lquwl"]
 [ext_resource type="PackedScene" uid="uid://kmyakts4l64t" path="res://addons/Basic FPS Player/Src/basic_player_head.tscn" id="2_h2yge"]
 [ext_resource type="PackedScene" uid="uid://bkp1vmox56or0" path="res://features/pause/pause.tscn" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c4483m7phi100" path="res://features/captcha/captcha_3d.tscn" id="4_1bvp3"]
 [ext_resource type="Resource" uid="uid://cex80oammhue1" path="res://features/captcha/puzzles/drews.tres" id="6_7mycd"]
+[ext_resource type="PackedScene" uid="uid://dm4yy7xdyn2wj" path="res://assets/terrain/big_beach/BigBeach.tscn" id="7_5vw27"]
 [ext_resource type="PackedScene" uid="uid://bm17pinf318kf" path="res://assets/terrain/beach/Mesher.glb" id="7_272bh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_272bh"]
@@ -29,7 +30,8 @@ adjustment_contrast = 0.84
 adjustment_saturation = 0.01
 
 [sub_resource type="GDScript" id="GDScript_272bh"]
-script/source = "extends \"res://addons/Basic FPS Player/Src/basic_player_startup.gd\"
+script/source = "@tool
+extends \"res://addons/Basic FPS Player/Src/basic_player_startup.gd\"
 
 func _process(delta: float) -> void:
   super._process(delta)
@@ -70,7 +72,7 @@ refraction_scale = 0.02
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_5vw27"]
 material = SubResource("StandardMaterial3D_272bh")
-size = Vector2(25, 25)
+size = Vector2(32, 32)
 subdivide_width = 50
 subdivide_depth = 50
 
@@ -108,9 +110,13 @@ puzzle = ExtResource("6_7mycd")
 
 [node name="Mesher" parent="." instance=ExtResource("7_272bh")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, -1.375, -4)
+visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.625, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
 cast_shadow = 0
 gi_mode = 0
 mesh = SubResource("PlaneMesh_5vw27")
+
+[node name="BigBeach" parent="." instance=ExtResource("7_5vw27")]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, -0.625, 0)

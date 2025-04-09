@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://s26sge2k2umm"
+path="res://.godot/imported/Base Tile.003.005.obj-f8a13c3bb75574ba446e2646fa4baac9.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Base Tile.003.005.obj-f8a13c3bb75574ba446e2646fa4baac9.mesh"]
+
+source_file="res://assets/terrain/big_beach/tiles/Base Tile.003.005.obj"
+dest_files=["res://.godot/imported/Base Tile.003.005.obj-f8a13c3bb75574ba446e2646fa4baac9.mesh", "res://.godot/imported/Base Tile.003.005.obj-f8a13c3bb75574ba446e2646fa4baac9.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

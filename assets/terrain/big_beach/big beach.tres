@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://ixtlat8m6rqg"]
+
+[ext_resource type="Texture2D" uid="uid://csfyiog7hrkjh" path="res://assets/terrain/big_beach/colormap.png" id="1_r4wf4"]
+
+[resource]
+albedo_texture = ExtResource("1_r4wf4")
+metallic_specular = 0.2
+roughness = 0.8
+distance_fade_min_distance = 28.44
+distance_fade_max_distance = 0.0

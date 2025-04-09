@@ -6,10 +6,10 @@
 [resource]
 script = ExtResource("1_7n7xo")
 texture = ExtResource("2_l1d0w")
-prompt = "Wähle alle Felder mit einem
-[b]glücklichen Schlagerstar[/b]
+prompt = "Wähle alle Felder mit einer
+[b]Schlagerstarnase[/b]
 Falls es keine gibt, klicke [i]überspringen[/i]."
-rows = 4
-columns = 4
-solution = PackedByteArray(5, 6, 9, 10, 13, 14)
+rows = 6
+columns = 7
+solution = PackedByteArray(17, 18, 24, 25)
 metadata/_custom_type_script = "uid://0m11q0crx85g"

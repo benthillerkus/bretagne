@@ -1,10 +1,10 @@
 [gd_scene load_steps=25 format=3 uid="uid://dto485kfikfgd"]
 
-[ext_resource type="FontFile" uid="uid://chbqm3ng5klra" path="res://assets/Roboto-Regular.ttf" id="1_1skmj"]
+[ext_resource type="FontFile" uid="uid://chbqm3ng5klra" path="res://assets/fonts/Roboto-Regular.ttf" id="1_1skmj"]
 [ext_resource type="Script" uid="uid://db5dkppnjpelc" path="res://features/captcha/captcha_2d.gd" id="1_5qoyj"]
 [ext_resource type="StyleBox" uid="uid://bid704rf07l28" path="res://features/captcha/selected_box.stylebox" id="1_d5nfq"]
 [ext_resource type="Texture2D" uid="uid://dv884l6nnif6s" path="res://features/captcha/tvstar.png" id="2_f2fjg"]
-[ext_resource type="FontFile" uid="uid://daxtfrtv6d4ga" path="res://assets/Roboto-Bold.ttf" id="2_gjt7f"]
+[ext_resource type="FontFile" uid="uid://daxtfrtv6d4ga" path="res://assets/fonts/Roboto-Bold.ttf" id="2_gjt7f"]
 [ext_resource type="StyleBox" uid="uid://vvgu6525umvs" path="res://features/captcha/confirm_button.stylebox" id="6_gjt7f"]
 [ext_resource type="Script" uid="uid://b6oyblc0pe3m7" path="res://features/captcha/captcha_2d_control.gd" id="6_u78rm"]
 
@@ -71,8 +71,8 @@ color = Color(0.912289, 0.912289, 0.912289, 1)
 thickness = 2
 
 [node name="Captcha2D" type="PanelContainer"]
-offset_right = 536.0
-offset_bottom = 831.0
+offset_right = 537.0
+offset_bottom = 814.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_86pyw")
 script = ExtResource("1_5qoyj")
 
