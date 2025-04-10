@@ -69,3 +69,7 @@ player_position={
 "type": "vec3",
 "value": Vector3(0, 0, 0)
 }
+delta={
+"type": "float",
+"value": 0.0
+}

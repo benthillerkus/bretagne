@@ -23,3 +23,8 @@ func _on_quit_pressed():
 func _unhandled_input(event: InputEvent) -> void:
   if event.is_action_pressed("game_pause"):
     pause()
+
+func _process(delta: float) -> void:
+  if get_tree().paused:
+    delta = 0
+  RenderingServer.global_shader_parameter_set("delta", delta)

@@ -1,5 +1,13 @@
-[gd_scene format=3 uid="uid://kmyakts4l64t"]
+[gd_scene load_steps=2 format=3 uid="uid://kmyakts4l64t"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_my50n"]
+exposure_multiplier = 0.784
+auto_exposure_enabled = true
+auto_exposure_speed = 1.0
 
 [node name="Head" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
+cull_mask = 1048573
+attributes = SubResource("CameraAttributesPractical_my50n")
+fov = 37.8493

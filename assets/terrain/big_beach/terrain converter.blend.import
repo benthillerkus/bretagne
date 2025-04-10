@@ -32,7 +32,76 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
-_subresources={}
+_subresources={
+"nodes": {
+"PATH:Base Tile": {
+"import/skip_import": true
+},
+"PATH:Base Tile_000_000": {
+"mesh_instance/cast_shadow": 0,
+"mesh_instance/layers": 2
+},
+"PATH:Base Tile_000_000-col": {
+"mesh_instance/cast_shadow": 0,
+"mesh_instance/layers": 2
+},
+"PATH:Base Tile_000_001": {
+"mesh_instance/cast_shadow": 0,
+"mesh_instance/layers": 2
+},
+"PATH:Base Tile_000_001-col": {
+"mesh_instance/cast_shadow": 0,
+"mesh_instance/layers": 2
+},
+"PATH:Base Tile_001_000": {
+"mesh_instance/cast_shadow": 0,
+"mesh_instance/layers": 2
+},
+"PATH:Base Tile_001_000-col": {
+"mesh_instance/cast_shadow": 0,
+"mesh_instance/layers": 2
+},
+"PATH:Base Tile_001_001": {
+"mesh_instance/cast_shadow": 0,
+"mesh_instance/layers": 2
+},
+"PATH:Base Tile_002_000": {
+"mesh_instance/cast_shadow": 0,
+"mesh_instance/layers": 2
+},
+"PATH:Base Tile_002_000-col": {
+"mesh_instance/cast_shadow": 0,
+"mesh_instance/layers": 2
+},
+"PATH:Base Tile_003_000": {
+"mesh_instance/cast_shadow": 0,
+"mesh_instance/layers": 2
+},
+"PATH:Base Tile_003_000-col": {
+"mesh_instance/cast_shadow": 0,
+"mesh_instance/layers": 2
+},
+"PATH:Base Tile_004_000": {
+"mesh_instance/cast_shadow": 0,
+"mesh_instance/layers": 2
+},
+"PATH:Base Tile_004_000-col": {
+"mesh_instance/cast_shadow": 0,
+"mesh_instance/layers": 2
+},
+"PATH:Base Tile_005_000": {
+"mesh_instance/cast_shadow": 0,
+"mesh_instance/layers": 2
+},
+"PATH:Base Tile_005_000-col": {
+"mesh_instance/cast_shadow": 0,
+"mesh_instance/layers": 2
+},
+"PATH:Suzanne": {
+"import/skip_import": true
+}
+}
+}
 blender/nodes/visible=0
 blender/nodes/active_collection_only=false
 blender/nodes/punctual_lights=false
