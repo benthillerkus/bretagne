@@ -39,9 +39,6 @@ render_priority = 0
 shader = ExtResource("4_6nf63")
 shader_parameter/simulation2 = SubResource("ViewportTexture_6nf63")
 shader_parameter/amplitude = 0.5
-shader_parameter/deep_water = Color(0.406735, 0.554172, 0.625224, 1)
-shader_parameter/shallow_water = Color(0.826345, 0.910748, 0.86839, 1)
-shader_parameter/murkiness = 0.3
 shader_parameter/refraction_strength = 0.1
 shader_parameter/simulation = SubResource("ViewportTexture_6xo0m")
 

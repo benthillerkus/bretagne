@@ -20,11 +20,6 @@ output_port_for_preview = 0
 size = Vector2(600, 400)
 expression = "normal = getNormal(sim, uv, 2.0 / 512.0);"
 
-[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_joph6"]
-parameter_name = "murkiness"
-default_value_enabled = true
-default_value = 0.3
-
 [sub_resource type="VisualShaderNodeLinearSceneDepth" id="VisualShaderNodeLinearSceneDepth_hmsgm"]
 
 [sub_resource type="VisualShaderNodeExpression" id="VisualShaderNodeExpression_qs10t"]
@@ -36,16 +31,6 @@ depth = exp(-d * murkiness);"
 [sub_resource type="VisualShaderNodeMix" id="VisualShaderNodeMix_joph6"]
 default_input_values = [0, Vector3(0, 0, 0), 1, Vector3(1, 1, 1), 2, Vector3(0.5, 0.5, 0.5)]
 op_type = 3
-
-[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_hmsgm"]
-parameter_name = "deep_water"
-default_value_enabled = true
-default_value = Color(0.406735, 0.554172, 0.625224, 1)
-
-[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_qs10t"]
-parameter_name = "shallow_water"
-default_value_enabled = true
-default_value = Color(0.826345, 0.910748, 0.86839, 1)
 
 [sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_joph6"]
 constant = 1.0
@@ -73,11 +58,20 @@ default_value = 0.1
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_jmbdl"]
 input_name = "uv"
 
-[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_jmbdl"]
-source = 5
-
 [sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_jmbdl"]
-constant = 1.0
+constant = 0.093
+
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_gafow"]
+constant = 0.056
+
+[sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_jmbdl"]
+constant = Color(0, 0, 0, 1)
+
+[sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_gafow"]
+constant = Color(0.235685, 0.325353, 0.303479, 1)
+
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_mf4kj"]
+constant = 0.446
 
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_hmsgm"]
 input_name = "vertex"
@@ -114,9 +108,6 @@ render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_s
 
 uniform sampler2D simulation2;
 uniform float amplitude = 0.5;
-uniform vec4 deep_water : source_color = vec4(0.406735, 0.554172, 0.625224, 1.000000);
-uniform vec4 shallow_water : source_color = vec4(0.826345, 0.910748, 0.868390, 1.000000);
-uniform float murkiness = 0.30000001192093;
 uniform sampler2D depth_tex_frg_17 : hint_depth_texture;
 uniform float refraction_strength = 0.10000000149012;
 uniform sampler2D simulation;
@@ -176,16 +167,16 @@ void vertex() {
 }
 
 void fragment() {
-// ColorParameter:20
-	vec4 n_out20p0 = deep_water;
+// ColorConstant:35
+	vec4 n_out35p0 = vec4(0.235685, 0.325353, 0.303479, 1.000000);
 
 
-// ColorParameter:21
-	vec4 n_out21p0 = shallow_water;
+// ColorConstant:34
+	vec4 n_out34p0 = vec4(0.000000, 0.000000, 0.000000, 1.000000);
 
 
-// FloatParameter:16
-	float n_out16p0 = murkiness;
+// FloatConstant:36
+	float n_out36p0 = 0.446000;
 
 
 	float n_out17p0;
@@ -204,12 +195,12 @@ void fragment() {
 	{
 		float d = n_out17p0;
 		d = d + VERTEX.z;
-		n_out18p0 = exp(-d * n_out16p0);
+		n_out18p0 = exp(-d * n_out36p0);
 	}
 
 
 // Mix:19
-	vec3 n_out19p0 = mix(vec3(n_out20p0.xyz), vec3(n_out21p0.xyz), vec3(n_out18p0));
+	vec3 n_out19p0 = mix(vec3(n_out35p0.xyz), vec3(n_out34p0.xyz), vec3(n_out18p0));
 
 
 // FloatParameter:29
@@ -253,14 +244,24 @@ void fragment() {
 	float n_out22p0 = 1.000000;
 
 
+// FloatConstant:32
+	float n_out32p0 = 0.093000;
+
+
+// FloatConstant:33
+	float n_out33p0 = 0.056000;
+
+
 // Output:0
 	ALBEDO = n_out23p0;
 	ALPHA = n_out22p0;
+	ROUGHNESS = n_out32p0;
+	SPECULAR = n_out33p0;
 
 
 }
 "
-graph_offset = Vector2(-853.849, -521.345)
+graph_offset = Vector2(-283.014, -326.991)
 nodes/vertex/0/position = Vector2(1120, 60)
 nodes/vertex/2/node = SubResource("VisualShaderNodeTexture2DParameter_qs10t")
 nodes/vertex/2/position = Vector2(-608.565, 286.397)
@@ -281,9 +282,9 @@ nodes/vertex/9/position = Vector2(720, -60)
 nodes/vertex/10/node = SubResource("VisualShaderNodeInput_hmsgm")
 nodes/vertex/10/position = Vector2(300, -80)
 nodes/vertex/connections = PackedInt32Array(2, 0, 4, 2, 3, 0, 4, 0, 6, 0, 5, 1, 4, 1, 5, 0, 5, 0, 8, 1, 7, 0, 8, 0, 8, 0, 9, 1, 10, 0, 9, 0, 9, 0, 0, 0)
-nodes/fragment/0/position = Vector2(800, 260)
+nodes/fragment/0/position = Vector2(560, 20)
 nodes/fragment/13/node = SubResource("VisualShaderNodeGlobalExpression_hmsgm")
-nodes/fragment/13/position = Vector2(-1740, 460)
+nodes/fragment/13/position = Vector2(-1660, 440)
 nodes/fragment/13/size = Vector2(960, 280)
 nodes/fragment/13/input_ports = ""
 nodes/fragment/13/output_ports = ""
@@ -297,19 +298,17 @@ nodes/fragment/13/expression = "vec3 getNormal(sampler2D height_map, vec2 uv, fl
 }
 "
 nodes/fragment/14/node = SubResource("VisualShaderNodeTexture2DParameter_joph6")
-nodes/fragment/14/position = Vector2(-2020, -340)
+nodes/fragment/14/position = Vector2(-1640, -240)
 nodes/fragment/15/node = SubResource("VisualShaderNodeExpression_hmsgm")
 nodes/fragment/15/position = Vector2(-1300, 0)
 nodes/fragment/15/size = Vector2(600, 400)
 nodes/fragment/15/input_ports = "0,8,sim;1,3,uv;"
 nodes/fragment/15/output_ports = "0,4,normal;"
 nodes/fragment/15/expression = "normal = getNormal(sim, uv, 2.0 / 512.0);"
-nodes/fragment/16/node = SubResource("VisualShaderNodeFloatParameter_joph6")
-nodes/fragment/16/position = Vector2(-1140, 1020)
 nodes/fragment/17/node = SubResource("VisualShaderNodeLinearSceneDepth_hmsgm")
-nodes/fragment/17/position = Vector2(-1060, 1260)
+nodes/fragment/17/position = Vector2(-500, 600)
 nodes/fragment/18/node = SubResource("VisualShaderNodeExpression_qs10t")
-nodes/fragment/18/position = Vector2(-720, 1180)
+nodes/fragment/18/position = Vector2(-280, 480)
 nodes/fragment/18/size = Vector2(460, 340)
 nodes/fragment/18/input_ports = "0,0,murkiness;1,0,linear_depth;"
 nodes/fragment/18/output_ports = "0,0,depth;"
@@ -317,29 +316,31 @@ nodes/fragment/18/expression = "float d = linear_depth;
 d = d + VERTEX.z;
 depth = exp(-d * murkiness);"
 nodes/fragment/19/node = SubResource("VisualShaderNodeMix_joph6")
-nodes/fragment/19/position = Vector2(-40, 920)
-nodes/fragment/20/node = SubResource("VisualShaderNodeColorParameter_hmsgm")
-nodes/fragment/20/position = Vector2(-640, 680)
-nodes/fragment/21/node = SubResource("VisualShaderNodeColorParameter_qs10t")
-nodes/fragment/21/position = Vector2(-640, 920)
+nodes/fragment/19/position = Vector2(40, 240)
 nodes/fragment/22/node = SubResource("VisualShaderNodeFloatConstant_joph6")
-nodes/fragment/22/position = Vector2(560, 340)
+nodes/fragment/22/position = Vector2(300, 260)
 nodes/fragment/23/node = SubResource("VisualShaderNodeMix_hmsgm")
-nodes/fragment/23/position = Vector2(480, 40)
+nodes/fragment/23/position = Vector2(300, 20)
 nodes/fragment/25/node = SubResource("VisualShaderNodeTexture_joph6")
-nodes/fragment/25/position = Vector2(220, 60)
+nodes/fragment/25/position = Vector2(40, 20)
 nodes/fragment/26/node = SubResource("VisualShaderNodeVectorOp_hmsgm")
-nodes/fragment/26/position = Vector2(-60, -60)
+nodes/fragment/26/position = Vector2(-200, -60)
 nodes/fragment/27/node = SubResource("VisualShaderNodeInput_qs10t")
-nodes/fragment/27/position = Vector2(-420, 100)
+nodes/fragment/27/position = Vector2(-620, 100)
 nodes/fragment/28/node = SubResource("VisualShaderNodeVectorOp_joph6")
-nodes/fragment/28/position = Vector2(-360, -140)
+nodes/fragment/28/position = Vector2(-500, -120)
 nodes/fragment/29/node = SubResource("VisualShaderNodeFloatParameter_hmsgm")
-nodes/fragment/29/position = Vector2(-980, -320)
+nodes/fragment/29/position = Vector2(-960, -240)
 nodes/fragment/30/node = SubResource("VisualShaderNodeInput_jmbdl")
-nodes/fragment/30/position = Vector2(-1620, 340)
-nodes/fragment/31/node = SubResource("VisualShaderNodeTexture_jmbdl")
-nodes/fragment/31/position = Vector2(-1520, -320)
+nodes/fragment/30/position = Vector2(-1620, 120)
 nodes/fragment/32/node = SubResource("VisualShaderNodeFloatConstant_jmbdl")
-nodes/fragment/32/position = Vector2(560, 440)
-nodes/fragment/connections = PackedInt32Array(14, 0, 15, 0, 17, 0, 18, 1, 16, 0, 18, 0, 18, 0, 19, 2, 20, 0, 19, 0, 21, 0, 19, 1, 22, 0, 0, 1, 26, 0, 25, 0, 27, 0, 26, 1, 28, 0, 26, 0, 15, 0, 28, 1, 29, 0, 28, 0, 18, 0, 23, 2, 19, 0, 23, 0, 25, 0, 23, 1, 30, 0, 15, 1, 14, 0, 31, 2, 23, 0, 0, 0)
+nodes/fragment/32/position = Vector2(300, 360)
+nodes/fragment/33/node = SubResource("VisualShaderNodeFloatConstant_gafow")
+nodes/fragment/33/position = Vector2(300, 460)
+nodes/fragment/34/node = SubResource("VisualShaderNodeColorConstant_jmbdl")
+nodes/fragment/34/position = Vector2(-300, 360)
+nodes/fragment/35/node = SubResource("VisualShaderNodeColorConstant_gafow")
+nodes/fragment/35/position = Vector2(-300, 260)
+nodes/fragment/36/node = SubResource("VisualShaderNodeFloatConstant_mf4kj")
+nodes/fragment/36/position = Vector2(-500, 520)
+nodes/fragment/connections = PackedInt32Array(14, 0, 15, 0, 17, 0, 18, 1, 18, 0, 19, 2, 22, 0, 0, 1, 26, 0, 25, 0, 27, 0, 26, 1, 28, 0, 26, 0, 15, 0, 28, 1, 29, 0, 28, 0, 19, 0, 23, 0, 25, 0, 23, 1, 30, 0, 15, 1, 32, 0, 0, 3, 18, 0, 23, 2, 23, 0, 0, 0, 33, 0, 0, 4, 34, 0, 19, 1, 35, 0, 19, 0, 36, 0, 18, 0)
