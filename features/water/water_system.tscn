@@ -21,11 +21,12 @@ viewport_path = NodePath("SimulationBuffer")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_efxa6"]
 resource_local_to_scene = true
 shader = ExtResource("3_ocw1e")
-shader_parameter/sim_tex = SubResource("ViewportTexture_ocw1e")
-shader_parameter/col_tex = SubResource("ViewportTexture_3820x")
-shader_parameter/phase = 0.375
-shader_parameter/attenuation = 0.996
-shader_parameter/deltaUV = 0.5
+shader_parameter/height_tex = SubResource("ViewportTexture_3820x")
+shader_parameter/prev_height_tex = SubResource("ViewportTexture_ocw1e")
+shader_parameter/dt = 0.016
+shader_parameter/alpha = 0.02
+shader_parameter/g = 9.8
+shader_parameter/tex_size = Vector2(512, 512)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_6xo0m"]
 viewport_path = NodePath("Simulation")

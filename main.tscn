@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cgsfn1yx1qenx"]
+[gd_scene load_steps=15 format=3 uid="uid://cgsfn1yx1qenx"]
 
 [ext_resource type="Script" uid="uid://baekn863wcxe7" path="res://game.gd" id="1_lquwl"]
 [ext_resource type="PackedScene" uid="uid://kmyakts4l64t" path="res://addons/Basic FPS Player/Src/basic_player_head.tscn" id="2_h2yge"]
@@ -43,6 +43,10 @@ radius = 0.25
 height = 1.25
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_272bh"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5vw27"]
 shading_mode = 0
 albedo_color = Color(1, 0, 0, 1)
 
@@ -91,3 +95,8 @@ puzzle = ExtResource("6_7mycd")
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, -0.625, 0)
 
 [node name="WaterSystem" parent="." instance=ExtResource("7_272bh")]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.03224, -0.0230511, -8.22768)
+layers = 3
+material = SubResource("StandardMaterial3D_5vw27")
