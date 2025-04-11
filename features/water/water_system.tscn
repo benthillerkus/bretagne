@@ -21,12 +21,10 @@ viewport_path = NodePath("SimulationBuffer")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_efxa6"]
 resource_local_to_scene = true
 shader = ExtResource("3_ocw1e")
-shader_parameter/height_tex = SubResource("ViewportTexture_3820x")
-shader_parameter/prev_height_tex = SubResource("ViewportTexture_ocw1e")
-shader_parameter/dt = 0.016
-shader_parameter/alpha = 0.02
-shader_parameter/g = 9.8
-shader_parameter/tex_size = Vector2(512, 512)
+shader_parameter/height_tex = SubResource("ViewportTexture_ocw1e")
+shader_parameter/collision_tex = SubResource("ViewportTexture_3820x")
+shader_parameter/alpha = 0.9
+shader_parameter/g = 2.0
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_6xo0m"]
 viewport_path = NodePath("Simulation")
@@ -47,8 +45,8 @@ shader_parameter/simulation = SubResource("ViewportTexture_6xo0m")
 resource_local_to_scene = true
 material = SubResource("ShaderMaterial_4wgqu")
 size = Vector2(31, 31)
-subdivide_width = 500
-subdivide_depth = 500
+subdivide_width = 511
+subdivide_depth = 511
 
 [sub_resource type="Environment" id="Environment_272bh"]
 background_mode = 1
@@ -59,6 +57,7 @@ reflected_light_source = 1
 
 [node name="SimulationBuffer" type="SubViewport" parent="."]
 disable_3d = true
+canvas_item_default_texture_repeat = 2
 render_target_clear_mode = 2
 render_target_update_mode = 4
 
@@ -72,6 +71,7 @@ grow_vertical = 2
 
 [node name="Simulation" type="SubViewport" parent="."]
 disable_3d = true
+canvas_item_default_texture_repeat = 2
 render_target_clear_mode = 2
 render_target_update_mode = 4
 

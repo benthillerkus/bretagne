@@ -26,10 +26,12 @@ void fragment() {
 	vec4 n_out3p0;
 // Texture2D:3
 	n_out3p0 = texture(Texture2DParameter, n_out4p0);
+	float n_out3p4 = n_out3p0.a;
 
 
 // Output:0
 	COLOR.rgb = vec3(n_out3p0.xyz);
+	COLOR.a = n_out3p4;
 
 
 }
@@ -42,4 +44,4 @@ nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_pw8si")
 nodes/fragment/3/position = Vector2(100, 80)
 nodes/fragment/4/node = SubResource("VisualShaderNodeInput_frw3m")
 nodes/fragment/4/position = Vector2(-320, 20)
-nodes/fragment/connections = PackedInt32Array(2, 0, 3, 2, 4, 0, 3, 0, 3, 0, 0, 0)
+nodes/fragment/connections = PackedInt32Array(2, 0, 3, 2, 4, 0, 3, 0, 3, 0, 0, 0, 3, 4, 0, 1)

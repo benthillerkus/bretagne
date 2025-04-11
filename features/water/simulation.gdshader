@@ -1,89 +1,82 @@
-// This shader implements a simplified iWave simulation pass.
-// It uses two textures:
-//   • height_tex: the current water height field (as red channel)
-//   • prev_height_tex: the water height from the previous time step
-// It computes a convolution to approximate the vertical derivative,
-// then updates the wave heights according to the finite–difference formula:
-//   h_next = ( h * (2 - α · dt) - prev_h - (vert_deriv * g * dt²) )
-//            / (1 + α · dt)
-//
-// To simulate interactivity, one could also add extra source or obstruction
-// terms. Here we focus on the core propagation.
-//
-// The simulation is done in a fragment shader that writes the new height (in red)
-// into an output texture, which would be ping-ponged over successive frames.
 shader_type canvas_item;
 
 // Uniform textures (to be bound to simulation render targets)
-uniform sampler2D height_tex;      // current height field (red channel)
-uniform sampler2D prev_height_tex;  // previous height field (red channel)
+uniform sampler2D height_tex; // red channel: current height, green channel: previous height
+uniform sampler2D collision_tex;
 
 // Simulation parameters
-uniform float dt = 0.016;     // time step (in seconds)
-uniform float alpha = 0.02;   // damping / friction coefficient
-uniform float g = 9.8;        // gravitational acceleration
+global uniform float dt = 0.016;     // time step (in seconds)
+uniform float alpha = 0.9;   // velocity damping term
+uniform float g = -9.81;        // gravitational acceleration
 
-// The size (in texels) of the simulation grid/texture
-uniform vec2 tex_size; 
+const float dx = 1.0 / 513.0;
 
-// The convolution kernel size: using a radius of 6 (so kernel is 13x13)
-const int kernel_radius = 6;
+// Includes the following generated items
+// const int P (kernel radius)
+// const int kernel_size (P * 2 + 1)
+// float kernel_lookup[] with size kernel_size * kernel_size
+#include "res://features/water/kernel_lookup_table.gdshaderinc"
 
-// A simple function to approximate kernel weights.
-// In the paper the kernel is derived from fluid dynamics (with Bessel functions),
-// but here we use a Gaussian for demonstration. Adjust sigma to tune the "spread."
-float kernelWeight(int i, int j) {
-    // Compute distance (in grid units) from the kernel’s center:
-    float dist = length(vec2(float(i), float(j)));
-    // sigma controls the width of the Gaussian; here set roughly to kernel_radius/2.
-    float sigma = float(kernel_radius) / 2.0;
-    return exp(-dist * dist / (2.0 * sigma * sigma));
+const float range = 10.0;
+
+float pack(float v) {
+  return (v / range) * 0.5 + 0.5;
+}
+
+float unpack(float v) {
+  return (v - 0.5) * 2.0 * range;
 }
 
 // Compute the vertical derivative via a convolution.
-// This reads the current height field over a (2*kernel_radius+1)^2 window,
-// weights it by the kernel, and normalizes by the sum of weights.
-float computeConvolution(vec2 uv) {
+// This reads the current height field over a (2*P+1)^2 window
+float convolve(vec2 uv) {
     float weightedSum = 0.0;
-    float weightTotal = 0.0;
     // Loop over a square region centered at the current texel.
-    for (int j = -kernel_radius; j <= kernel_radius; j++) {
-        for (int i = -kernel_radius; i <= kernel_radius; i++) {
+    for (int j = -P; j <= P; j++) {
+        for (int i = -P; i <= P; i++) {
             // Compute texture coordinate offset (assume uniform spacing)
-            vec2 offset = vec2(float(i), float(j)) / tex_size;
-            float w = kernelWeight(i, j);
-            weightedSum += texture(height_tex, uv + offset).r * w;
-            weightTotal += w;
+            vec2 offset = vec2(float(i), float(j)) * dx;
+            vec4 sample = texture(height_tex, uv + offset);
+            float height = unpack(sample.x);
+            height *= sample.y; // Apply the mask (green channel)
+            
+            float weight = kernel_lookup[(j + P) * kernel_size + (i + P)];
+            weightedSum += height * weight;
         }
     }
-    // Normalize the convolution result.
-    return weightedSum / weightTotal;
+    return weightedSum;
 }
 
 void fragment() {
-    // Map the fragment's screen coordinate into texture UVs.
-    vec2 uv = FRAGCOORD.xy / tex_size;
-    
+    // Map the fragment's screen coordinate into texture UVs.    
     // Read current and previous height values.
-    float h = texture(height_tex, uv).r;
-    float prev_h = texture(prev_height_tex, uv).r;
-    
+    vec2 h = texture(height_tex, UV).xy;
+    float height = unpack(h.x);
+    float prev_height = unpack(h.y);
+
+    // Sample obstruction mask (red channel)
+    float obstruction = 1.0 - texture(collision_tex, vec2(UV.x, 1.0 - UV.y)).x;
+
+    height *= obstruction;
+
+    float dtc = dt;
+
     // Compute the vertical derivative using convolution.
-    float vert_deriv = computeConvolution(uv);
+    float vert_deriv = convolve(UV);
     
     // Apply the propagation update from equation (3) in the article:
-    // h_next = (h*(2.0 - alpha * dt) - prev_h - vert_deriv * g * dt*dt) / (1.0 + alpha * dt)
-    float numerator = h * (2.0 - alpha * dt) - prev_h - vert_deriv * g * dt * dt;
-    float h_next = numerator / (1.0 + alpha * dt);
+    float adt = alpha * dtc;
+    float adt2 = 1.0 / (1.0 + adt);
+    float next_height = height * (2.0 - adt) - prev_height - g * vert_deriv;
+    next_height *= adt2;
+ 
+    next_height *= obstruction;
+
+    next_height *= 0.4;
+                
+    COLOR = vec4(pack(next_height), pack(height), obstruction, 1.0);
     
-    // (Optional) You could blend in source or obstruction terms here.
-    // For example, if you had:
-    // uniform sampler2D source_tex;
-    // uniform sampler2D obstruction_tex;
-    // then you might write:
-    // h_next += texture(source_tex, uv).r;
-    // h_next *= texture(obstruction_tex, uv).r;
-    
-    // Output the updated height field (in the red channel; other channels can be zero).
-    COLOR = vec4(h_next, 0.0, 0.0, 1.0);
+    if (TIME < 2.0) {
+      COLOR = vec4(pack(0.2), pack(0.2), 0.0, 1.0);
+    }
 }

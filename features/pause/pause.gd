@@ -27,4 +27,4 @@ func _unhandled_input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
   if get_tree().paused:
     delta = 0
-  RenderingServer.global_shader_parameter_set("delta", delta)
+  RenderingServer.global_shader_parameter_set("dt", delta)
