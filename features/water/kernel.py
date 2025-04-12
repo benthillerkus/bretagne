@@ -4,91 +4,49 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 import os
 
-def bessel_function(x):
-    """
-    Implementation of Bessel function J₀(x) based on approximations from
-    http://people.math.sfu.ca/~cbm/aands/frameindex.htm (pages 369-370)
-    """
-    if x <= -3:
-        print("Warning: x is smaller than -3, result may be inaccurate")
-    
-    # 9.4.1 approximation for -3 <= x <= 3
-    if x <= 3:
-        # Ignored the small rest term at the end
-        return (1 - 
-                2.2499997 * (x/3)**2 + 
-                1.2656208 * (x/3)**4 - 
-                0.3163866 * (x/3)**6 + 
-                0.0444479 * (x/3)**8 - 
-                0.0039444 * (x/3)**10 + 
-                0.0002100 * (x/3)**12)
-    
-    # 9.4.3 approximation for 3 <= x <= infinity
+def j0(x):
+    ax = abs(x)
+    if ax < 8.0:
+        y = x * x
+        ans1 = 57568490574.0 + y * (-13362590354.0 + y * (651619640.7 + y * (-11214424.18 + y * (77392.33017 + y * (-184.9052456)))))
+        ans2 = 57568490411.0 + y * (1029532985.0 + y * (9494680.718 + y * (59272.64853 + y * (267.8532712 + y * 1.0))))
+        return ans1 / ans2
     else:
-        f_zero = (0.79788456 - 
-                  0.00000077 * (3/x)**1 - 
-                  0.00552740 * (3/x)**2 - 
-                  0.00009512 * (3/x)**3 - 
-                  0.00137237 * (3/x)**4 - 
-                  0.00072805 * (3/x)**5 + 
-                  0.00014476 * (3/x)**6)
-        
-        theta_zero = (x - 
-                     0.78539816 - 
-                     0.04166397 * (3/x)**1 - 
-                     0.00003954 * (3/x)**2 - 
-                     0.00262573 * (3/x)**3 - 
-                     0.00054125 * (3/x)**4 - 
-                     0.00029333 * (3/x)**5 + 
-                     0.00013558 * (3/x)**6)
-        
-        return (x**(-1/3)) * f_zero * math.cos(theta_zero)
+        z = 8.0 / ax
+        y = z * z
+        xx = ax - 0.785398164
+        ans1 = 1.0 + y * (-0.1098628627e-2 + y * (0.2734510407e-4 + y * (-0.2073370639e-5 + y * 0.2093887211e-6)))
+        ans2 = -0.1562499995e-1 + y * (0.1430488765e-3 + y * (-0.6911147651e-5 + y * (0.7621095161e-6 - y * 0.934935152e-7)))
+        return math.sqrt(0.636619772 / ax) * (math.cos(xx) * ans1 - z * math.sin(xx) * ans2)
 
-def calculate_g_zero():
-    """Calculate G_zero value used for normalization"""
-    delta_q = 0.001
-    sigma = 1.0
-    
-    g_zero = 0.0
-    for n in range(1, 10001):
-        q_n_square = (n * delta_q) ** 2
-        g_zero += q_n_square * math.exp(-sigma * q_n_square)
-    
-    return g_zero
+def initialize_kernel(P, dk=0.01, sigma=1.0):
+    """
+    Compute the elements of the convolution kernel based on the reference implementation.
+    dk: Step size for integration.
+    sigma: Parameter controlling the exponential decay.
+    """
+    # Compute normalization factor
+    norm = 0.0
+    k = 0.0
+    while k < 10.0:
+        norm += k * k * math.exp(-sigma * k * k)
+        k += dk
 
-def calculate_g(k, l, g_zero):
-    """Calculate G(k,l) kernel value"""
-    delta_q = 0.001
-    sigma = 1.0
-    r = math.sqrt(k*k + l*l)
-    
-    g = 0.0
-    for n in range(1, 10001):
-        q_n = n * delta_q
-        q_n_square = q_n * q_n
-        g += q_n_square * math.exp(-sigma * q_n_square) * bessel_function(q_n * r)
-    
-    g /= g_zero
-    
-    return g
-
-def precompute_kernel_values(P):
-    """Precompute the kernel values G(k,l) for a kernel of size 2P+1 x 2P+1"""
-    # Calculate G_zero for normalization
-    g_zero = calculate_g_zero()
-    
-    # Create kernel array
+    # Initialize kernel array
     kernel_size = 2 * P + 1
     kernel = np.zeros((kernel_size, kernel_size))
-    
-    print(f"Computing {kernel_size}x{kernel_size} kernel values...")
-    
-    # Fill the kernel array
-    for k in range(-P, P + 1):
-        print(f"Row {k+P+1}/{kernel_size}")
-        for l in range(-P, P + 1):
-            kernel[k + P, l + P] = calculate_g(float(k), float(l), g_zero)
-    
+
+    # Compute kernel values
+    for i in range(-P, P + 1):
+        for j in range(-P, P + 1):
+            r = math.sqrt(i * i + j * j)
+            kern = 0.0
+            k = 0.0
+            while k < 10.0:
+                kern += k * k * math.exp(-sigma * k * k) * j0(r * k)
+                k += dk
+            kernel[i + P, j + P] = kern / norm
+
     return kernel
 
 def format_for_glsl(kernel, P):
@@ -202,7 +160,7 @@ def main():
     P = 8  # Change this to adjust kernel size
     
     # Compute the kernel
-    kernel = precompute_kernel_values(P)
+    kernel = initialize_kernel(P)
     
     # Generate visualization
     visualize_kernel(kernel, P)
