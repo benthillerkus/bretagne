@@ -1,15 +1,15 @@
 shader_type canvas_item;
 
-uniform sampler2D sim_tex;
-uniform sampler2D col_tex;
+uniform sampler2D sim_tex : filter_nearest, hint_default_transparent;
+uniform sampler2D col_tex : filter_nearest, hint_default_transparent;
 
-uniform float phase = 0.2;
-uniform float attenuation = 0.999;
-uniform float deltaUV = 3.0;
+const float phase = 0.225;
+const float attenuation = 0.999;
+const float deltaUV = 1.0;
 
 void fragment() {
-	float dv = 1.0 / 514.0;
-	float du = 1.0 / 514.0;
+	float dv = 1.0 / 512.0;
+	float du = 1.0 / 512.0;
 	vec3 duv = vec3(du, dv, 0) * deltaUV;
 
 	vec3 c = texture(sim_tex, UV).rgb;
