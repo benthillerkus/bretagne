@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cup1ap1krcuq4"]
+[gd_scene load_steps=13 format=3 uid="uid://cup1ap1krcuq4"]
 
 [ext_resource type="Shader" uid="uid://clbm7rrysn2lo" path="res://features/water/buffer.tres" id="2_3820x"]
 [ext_resource type="Shader" uid="uid://fk3t1hsvqam5" path="res://features/water/simulation.gdshader" id="3_ocw1e"]
@@ -23,22 +23,14 @@ resource_local_to_scene = true
 shader = ExtResource("3_ocw1e")
 shader_parameter/height_tex = SubResource("ViewportTexture_ocw1e")
 shader_parameter/collision_tex = SubResource("ViewportTexture_3820x")
-shader_parameter/alpha = 0.9
-shader_parameter/g = 2.0
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_6xo0m"]
-viewport_path = NodePath("Simulation")
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_6nf63"]
 viewport_path = NodePath("Simulation")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4wgqu"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("4_6nf63")
-shader_parameter/simulation2 = SubResource("ViewportTexture_6nf63")
-shader_parameter/amplitude = 0.5
-shader_parameter/refraction_strength = 0.1
 shader_parameter/simulation = SubResource("ViewportTexture_6xo0m")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_5vw27"]
@@ -57,6 +49,8 @@ reflected_light_source = 1
 
 [node name="SimulationBuffer" type="SubViewport" parent="."]
 disable_3d = true
+transparent_bg = true
+canvas_item_default_texture_filter = 0
 canvas_item_default_texture_repeat = 2
 render_target_clear_mode = 2
 render_target_update_mode = 4
@@ -71,6 +65,8 @@ grow_vertical = 2
 
 [node name="Simulation" type="SubViewport" parent="."]
 disable_3d = true
+transparent_bg = true
+canvas_item_default_texture_filter = 0
 canvas_item_default_texture_repeat = 2
 render_target_clear_mode = 2
 render_target_update_mode = 4

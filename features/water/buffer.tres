@@ -2,6 +2,8 @@
 
 [sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_7u1g5"]
 parameter_name = "Texture2DParameter"
+color_default = 2
+texture_filter = 1
 
 [sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_pw8si"]
 expanded_output_ports = [0]
@@ -14,7 +16,7 @@ input_name = "uv"
 code = "shader_type canvas_item;
 render_mode blend_mix;
 
-uniform sampler2D Texture2DParameter;
+uniform sampler2D Texture2DParameter : hint_default_transparent, filter_nearest;
 
 
 

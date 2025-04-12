@@ -49,6 +49,22 @@ def initialize_kernel(P, dk=0.01, sigma=1.0):
 
     return kernel
 
+def initialize_gaussian_kernel(P, sigma=1.0):
+    """
+    Generate a Gaussian kernel.
+    P: Half the size of the kernel (kernel size will be 2*P+1).
+    sigma: Standard deviation of the Gaussian distribution.
+    """
+    kernel_size = 2 * P + 1
+    kernel = np.zeros((kernel_size, kernel_size))
+
+    # Compute Gaussian kernel values
+    for i in range(-P, P + 1):
+        for j in range(-P, P + 1):
+            kernel[i + P, j + P] = math.exp(-(i**2 + j**2) / (2 * sigma**2))
+
+    return kernel
+
 def format_for_glsl(kernel, P):
     """Format the kernel values as a GLSL-compatible float array"""
     kernel_size = 2 * P + 1
@@ -157,10 +173,10 @@ def visualize_kernel(kernel, P, output_path="kernel_visualization.png"):
 
 def main():
     # Set kernel size (P parameter from C# code)
-    P = 8  # Change this to adjust kernel size
+    P = 14  # Change this to adjust kernel size
     
     # Compute the kernel
-    kernel = initialize_kernel(P)
+    kernel = initialize_kernel(P, sigma=1.2)
     
     # Generate visualization
     visualize_kernel(kernel, P)
