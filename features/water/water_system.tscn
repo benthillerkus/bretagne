@@ -23,9 +23,6 @@ resource_local_to_scene = true
 shader = ExtResource("3_ocw1e")
 shader_parameter/sim_tex = SubResource("ViewportTexture_ocw1e")
 shader_parameter/col_tex = SubResource("ViewportTexture_3820x")
-shader_parameter/phase = 0.375
-shader_parameter/attenuation = 0.996
-shader_parameter/deltaUV = 0.5
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_6xo0m"]
 viewport_path = NodePath("Simulation")

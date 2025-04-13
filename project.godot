@@ -51,10 +51,6 @@ game_pause={
 disable_plugin_dialogues=true
 copy_path="res://"
 
-[rendering]
-
-renderer/rendering_method="mobile"
-
 [shader_globals]
 
 wind_intensity={
