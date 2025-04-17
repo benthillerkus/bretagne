@@ -2,18 +2,21 @@
 extends CharacterBody3D
 
 var BasicFPSPlayerScene : PackedScene = preload("basic_player_head.tscn")
-var addedHead = false
+var head: Node3D = null
+
+## A thing that the player currently carries that can be thrown
+var carrying: Node3D = null
 
 func _enter_tree():
 	
 	if find_child("Head"):
-		addedHead = true
+		head = $Head
 	
-	if Engine.is_editor_hint() && !addedHead:
+	if Engine.is_editor_hint() && head == null:
 		var s = BasicFPSPlayerScene.instantiate()
 		add_child(s)
 		s.owner = get_tree().edited_scene_root
-		addedHead = true
+		head = $Head
 
 ## PLAYER MOVMENT SCRIPT ##
 ###########################
@@ -48,6 +51,7 @@ func _enter_tree():
 @export var KEY_BIND_RIGHT := "ui_right"
 @export var KEY_BIND_DOWN := "ui_down"
 @export var KEY_BIND_JUMP := "ui_accept"
+@export var KEY_BIND_PICKUP := "ui_select"
 
 @export_category("Advanced")
 @export var UPDATE_PLAYER_ON_PHYS_STEP := true	# When check player is moved and rotated in _physics_process (fixed fps)
@@ -69,6 +73,8 @@ var head_start_pos : Vector3
 # Current player tick, used in head bob calculation
 var tick = 0
 
+var raycast = 0
+
 func _ready():
 	if Engine.is_editor_hint():
 		return
@@ -78,6 +84,7 @@ func _ready():
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 	head_start_pos = $Head.position
+	raycast = $Head/RayCast3D
 
 func _physics_process(delta):
 	if Engine.is_editor_hint():
@@ -85,7 +92,7 @@ func _physics_process(delta):
 	
 	# Increment player tick, used in head bob motion
 	tick += 1
-	
+
 	if UPDATE_PLAYER_ON_PHYS_STEP:
 		move_player(delta)
 		rotate_player(delta)
@@ -95,8 +102,17 @@ func _physics_process(delta):
 		if velocity && is_on_floor():
 			head_bob_motion()
 		reset_head_bob(delta)
+	
+	if carrying:
+		previous_carrying_position = carrying_position
+		carrying_position = carrying.global_position
+	
+
+var carrying_position
+var previous_carrying_position
 
 func _process(delta):
+	RenderingServer.global_shader_parameter_set("player_position", position)
 	if Engine.is_editor_hint():
 		return
 
@@ -111,6 +127,31 @@ func _input(event):
 	# Listen for mouse movement and check if mouse is captured
 	if event is InputEventMouseMotion && Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		set_rotation_target(event.relative)
+	if event.is_action_pressed(KEY_BIND_PICKUP):
+		if carrying:
+			drop()
+		else:
+			var collider = raycast.get_collider()
+			if collider and collider.is_in_group("Throwable"):
+				pickup(collider)
+
+func pickup(object: Node3D):
+	object.reparent(head)
+	carrying = object
+	object.on_pickup()
+	object.process_mode = Node.PROCESS_MODE_DISABLED
+	carrying_position = object.global_position
+
+func drop():
+	if carrying:
+		carrying.reparent(get_parent())
+		carrying.on_drop()
+		carrying.process_mode = Node.PROCESS_MODE_INHERIT
+		if carrying is RigidBody3D:
+			carrying.linear_velocity = (carrying_position - previous_carrying_position) / get_process_delta_time() / 4
+		carrying = null
+		carrying_position = Vector3.ZERO
+		previous_carrying_position = Vector3.ZERO
 
 func set_rotation_target(mouse_motion : Vector2):
 	# Add player target to the mouse -x input

@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://db5wty83aalcl"]
+
+[ext_resource type="Script" uid="uid://nag00x8vd486" path="res://features/rock/rock.gd" id="1_a1vfv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kek77"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_272bh"]
+radius = 0.266668
+
+[node name="RigidBody3D" type="RigidBody3D" groups=["Throwable"]]
+collision_layer = 3
+script = ExtResource("1_a1vfv")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+radius = 0.272759
+metadata/_edit_lock_ = true
+
+[node name="CSGSphere3D2" type="CSGSphere3D" parent="."]
+layers = 2
+cast_shadow = 0
+radius = 0.272759
+material = SubResource("StandardMaterial3D_kek77")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_272bh")
+metadata/_edit_lock_ = true

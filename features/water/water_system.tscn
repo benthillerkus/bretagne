@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cup1ap1krcuq4"]
+[gd_scene load_steps=16 format=3 uid="uid://cup1ap1krcuq4"]
 
 [ext_resource type="Shader" uid="uid://clbm7rrysn2lo" path="res://features/water/buffer.tres" id="2_3820x"]
 [ext_resource type="Shader" uid="uid://fk3t1hsvqam5" path="res://features/water/simulation.gdshader" id="3_ocw1e"]
@@ -18,14 +18,30 @@ viewport_path = NodePath("Collision")
 [sub_resource type="ViewportTexture" id="ViewportTexture_ocw1e"]
 viewport_path = NodePath("SimulationBuffer")
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_q3q1e"]
+viewport_path = NodePath("Terrain")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_efxa6"]
 resource_local_to_scene = true
 shader = ExtResource("3_ocw1e")
 shader_parameter/sim_tex = SubResource("ViewportTexture_ocw1e")
 shader_parameter/col_tex = SubResource("ViewportTexture_3820x")
+shader_parameter/ter_tex = SubResource("ViewportTexture_q3q1e")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_6xo0m"]
-viewport_path = NodePath("Simulation")
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6xo0m"]
+noise_type = 2
+fractal_type = 3
+fractal_lacunarity = 2.86
+fractal_gain = 0.645
+fractal_weighted_strength = 0.3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qltoe"]
+in_3d_space = true
+generate_mipmaps = false
+seamless = true
+as_normal_map = true
+bump_strength = 0.7
+noise = SubResource("FastNoiseLite_6xo0m")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_6nf63"]
 viewport_path = NodePath("Simulation")
@@ -36,8 +52,7 @@ render_priority = 0
 shader = ExtResource("4_6nf63")
 shader_parameter/simulation2 = SubResource("ViewportTexture_6nf63")
 shader_parameter/amplitude = 0.5
-shader_parameter/refraction_strength = 0.1
-shader_parameter/simulation = SubResource("ViewportTexture_6xo0m")
+shader_parameter/noise = SubResource("NoiseTexture2D_qltoe")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_5vw27"]
 resource_local_to_scene = true
@@ -100,6 +115,21 @@ size = Vector2i(1024, 1024)
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -5, 0)
 keep_aspect = 0
 cull_mask = 2
+environment = SubResource("Environment_272bh")
+projection = 1
+current = true
+size = 30.875
+far = 5.0
+
+[node name="Terrain" type="SubViewport" parent="."]
+handle_input_locally = false
+canvas_cull_mask = 4293918720
+size = Vector2i(1024, 1024)
+
+[node name="Camera3D" type="Camera3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5, 0)
+keep_aspect = 0
+cull_mask = 4
 environment = SubResource("Environment_272bh")
 projection = 1
 current = true

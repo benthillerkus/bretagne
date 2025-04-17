@@ -1,5 +1,8 @@
 extends Control
 
+var credits_scene: PackedScene = preload("res://features/credits/credits.tscn")
+var credits = null
+
 func _ready():
   process_mode = Node.PROCESS_MODE_ALWAYS
   hide()
@@ -8,6 +11,9 @@ func pause():
   get_tree().paused = true
   show()
   Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+  if credits:
+    credits.queue_free()
+    credits = null
 
 func resume():
   get_tree().paused = false
@@ -28,3 +34,13 @@ func _process(delta: float) -> void:
   if get_tree().paused:
     delta = 0
   RenderingServer.global_shader_parameter_set("delta", delta)
+
+
+func _on_credits_pressed() -> void:
+  if credits:
+    return
+  credits = credits_scene.instantiate()
+  get_tree().root.add_child(credits)
+  resume()
+  Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+  credits.show()

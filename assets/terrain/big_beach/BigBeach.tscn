@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://dm4yy7xdyn2wj"]
+[gd_scene load_steps=43 format=3 uid="uid://dm4yy7xdyn2wj"]
 
 [ext_resource type="Script" uid="uid://cdf2trpuo8xqj" path="res://assets/terrain/big_beach/big_beach.gd" id="1_83484"]
 [ext_resource type="Material" uid="uid://ixtlat8m6rqg" path="res://assets/terrain/big_beach/big beach.tres" id="2_3eohu"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://eeenkjyl456q" path="res://assets/terrain/big_beach/terrain_converter.gd" id="4_3eohu"]
 [ext_resource type="ArrayMesh" uid="uid://c2tqoy65fk1p5" path="res://assets/terrain/big_beach/tiles/Base Tile.000.000.obj" id="4_8aua0"]
 [ext_resource type="ArrayMesh" uid="uid://c4xa8ifwy3org" path="res://assets/terrain/big_beach/tiles/Base Tile.000.001.obj" id="5_2t6fv"]
+[ext_resource type="Shader" uid="uid://0o54jb530fpr" path="res://features/water/terrain_height.tres" id="5_rsu4e"]
 [ext_resource type="ArrayMesh" uid="uid://b31bnbgvbm1kv" path="res://assets/terrain/big_beach/tiles/Base Tile.000.002.obj" id="6_4dh1e"]
 [ext_resource type="ArrayMesh" uid="uid://b0rmggm4ue5cn" path="res://assets/terrain/big_beach/tiles/Base Tile.000.003.obj" id="7_og033"]
 [ext_resource type="ArrayMesh" uid="uid://b8ushkwv14hev" path="res://assets/terrain/big_beach/tiles/Base Tile.000.004.obj" id="8_j5gov"]
@@ -41,6 +42,10 @@
 [ext_resource type="ArrayMesh" uid="uid://dfp2rjrem1nk0" path="res://assets/terrain/big_beach/tiles/Base Tile.005.004.obj" id="38_r4g4k"]
 [ext_resource type="ArrayMesh" uid="uid://c3pd0kul23hpl" path="res://assets/terrain/big_beach/tiles/Base Tile.005.005.obj" id="39_tpbte"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8aua0"]
+render_priority = 0
+shader = ExtResource("5_rsu4e")
+
 [node name="Node3D" type="Node3D"]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0)
 script = ExtResource("1_83484")
@@ -50,6 +55,7 @@ material = ExtResource("2_3eohu")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05818e-06, 0, -0.058601)
 visible = false
 script = ExtResource("4_3eohu")
+override_material = SubResource("ShaderMaterial_8aua0")
 
 [node name="BaseTile_000_000" type="MeshInstance3D" parent="."]
 material_override = ExtResource("2_3eohu")

@@ -2,6 +2,7 @@ shader_type canvas_item;
 
 uniform sampler2D sim_tex : filter_nearest, hint_default_transparent;
 uniform sampler2D col_tex : filter_nearest, hint_default_transparent;
+uniform sampler2D ter_tex : filter_nearest, hint_default_transparent;
 
 const float phase = 0.225;
 const float attenuation = 0.999;
@@ -23,14 +24,19 @@ void fragment() {
 	vec2 col_uv = vec2(UV.x, 1.0 - UV.y);
 	float col = texture(col_tex, col_uv).r;
 	float prevCol = texture(sim_tex, UV).b;
-
+  float ter = texture(ter_tex, UV).g;
+  
 	if (col > 0.0 && prevCol == 0.0) {
 		p += col * 0.5;
-	}
+	} else if
 
-	if (prevCol > 0.0 && col == 0.0) {
-		p -= prevCol * 0.5;
-	}
+	(prevCol > 0.0 && col == 0.0) {
+		p -= prevCol * 1.5;
+	} else if
+  
+  (ter > 0.0) {
+    p = p * -2.0;
+  }
 
-	COLOR = vec4(p, c.r, col, 1);
+	COLOR = vec4(p, c.r, col, 1.0);
 }
