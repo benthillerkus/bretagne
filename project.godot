@@ -27,6 +27,10 @@ config/name="bretagne"
 config/description="Projekt für die Extra Muros Woche im Wintersemester 2024/2025 an der Hochschule Düsseldorf"
 run/main_scene="uid://cgsfn1yx1qenx"
 config/features=PackedStringArray("4.4", "Mobile")
+boot_splash/bg_color=Color(1, 1, 1, 1)
+boot_splash/fullsize=false
+boot_splash/use_filter=false
+boot_splash/image="uid://85i0ajx8n2ac"
 config/icon="res://config/icon.svg"
 
 [display]

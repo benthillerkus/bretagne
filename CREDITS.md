@@ -4,10 +4,10 @@
 
 ## Roboto
 
-https://fonts.google.com/specimen/Roboto
+<https://fonts.google.com/specimen/Roboto>
 
-Copyright 2011 The Roboto Project Authors (https://github.com/googlefonts/roboto-classic)
-This Font Software is licensed under the SIL Open Font License, Version 1.1 . This license is copied below, and is also available with a FAQ at: https://openfontlicense.org
+Copyright 2011 The Roboto Project Authors (<https://github.com/googlefonts/roboto-classic>)
+This Font Software is licensed under the SIL Open Font License, Version 1.1 . This license is copied below, and is also available with a FAQ at: <https://openfontlicense.org>
 
 ### SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
 
@@ -46,7 +46,7 @@ Designed by Christian Robertson
 
 Apache License
 Version 2.0, January 2004
-http://www.apache.org/licenses/
+<http://www.apache.org/licenses/>
 
 ###  TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
 
@@ -241,7 +241,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0
+<http://www.apache.org/licenses/LICENSE-2.0>
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -254,8 +254,8 @@ limitations under the License.
 
 ## Basic FPS Player
 
-https://godotengine.org/asset-library/asset/2439
-https://github.com/sammburr/Basic-FPS-Player-GODOT-4.0
+<https://godotengine.org/asset-library/asset/2439>
+<https://github.com/sammburr/Basic-FPS-Player-GODOT-4.0>
 
 ### Unlicense
 This is free and unencumbered software released into the public domain.
@@ -285,7 +285,7 @@ For more information, please refer to <https://unlicense.org>
 
 ## Edit Resources as Table
 
-https://github.com/don-tnowe/godot-resources-as-sheets-plugin
+<https://github.com/don-tnowe/godot-resources-as-sheets-plugin>
 
 ### MIT License
 Copyright 2022 Gennady "Don Tnowe" Krupenyov
@@ -298,7 +298,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## GUT 9.3.1 (Godot 4.2)
 
-https://github.com/bitwes/Gut
+<https://github.com/bitwes/Gut>
 
 ### MIT License
 Copyright (c) 2018 Tom "Butch" Wesley
@@ -323,7 +323,7 @@ THE SOFTWARE.
 
 ## MarkdownLabel
 
-https://github.com/daenvil/MarkdownLabel
+<https://github.com/daenvil/MarkdownLabel>
 
 ### MIT License
 Copyright (c) 2023 Daenvil
@@ -350,5 +350,9 @@ THE SOFTWARE.
 
 ## Water Simulation
 
-Based on https://github.com/CBerry22/Godot-Water-Ripple-Simulation-Shader
-https://youtu.be/VSwVwIYEypY
+Based on <https://github.com/CBerry22/Godot-Water-Ripple-Simulation-Shader>
+<https://youtu.be/VSwVwIYEypY>
+
+# Assets
+
+"Seagull All animation Little nighmares" (<https://skfb.ly/oLIv8>) by alex.andain.777 is licensed under Creative Commons Attribution (<http://creativecommons.org/licenses/by/4.0/>).

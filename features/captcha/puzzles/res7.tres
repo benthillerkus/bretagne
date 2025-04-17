@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Captcha" load_steps=3 format=3 uid="uid://cxrujequw34f0"]
+
+[ext_resource type="Script" uid="uid://0m11q0crx85g" path="res://features/captcha/captcha.gd" id="1_eq4f7"]
+[ext_resource type="Texture2D" uid="uid://b7gk2sun6l4ba" path="res://assets/photos/_MG_0905_DxO_game.jpg" id="2_itb13"]
+
+[resource]
+script = ExtResource("1_eq4f7")
+texture = ExtResource("2_itb13")
+prompt = "Wähle alle Felder mit einem
+[b]Stuhl[/b]
+Falls es keine gibt, klicke [i]überspringen[/i]."
+rows = 3
+columns = 3
+solution = PackedByteArray(3)
+metadata/_custom_type_script = "uid://0m11q0crx85g"

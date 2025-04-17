@@ -16,6 +16,11 @@ var rocks: Node3D = null
 
 var puzzles: Array
 
+signal score_changed(int)
+var score = 0:
+  set(value):
+    score = value
+    score_changed.emit(score)
 
 func _ready() -> void:
   puzzles = ResourceLoader.list_directory("res://features/captcha/puzzles/")
@@ -26,19 +31,27 @@ func _ready() -> void:
   animation_player.speed_scale = 1.0 / game_length
   animation_player.play("time_of_day")
   spawn_captcha()
+  score = 0
 
 func _physics_process(_delta: float) -> void:
   if captcha_pin.position.y < -3:
     spawn_captcha()
+  
+  var tallest = 0
+  for rock in get_tree().get_nodes_in_group("Throwable"):
+    if rock.position.y > tallest:
+      tallest = rock.position.y
+  score = int(tallest * 100)
 
 func spawn_rock() -> void:
   var random_rock: RigidBody3D = rocks.get_children()[randi() % rocks.get_child_count()]
-  var rock = random_rock.duplicate(DuplicateFlags.DUPLICATE_GROUPS)
-  add_child(rock)
+  var rock: RigidBody3D = random_rock.duplicate(DuplicateFlags.DUPLICATE_GROUPS)
   rock.position = Vector3(0, 10, 0) + captcha_pin.position
   rock.rotation_degrees = Vector3(0, 0, 0)
-  var rock_scale = randf_range(.2, 1.1)
-  rock.scale = Vector3(rock_scale, rock_scale, rock_scale)
+  var rock_scale = pow(randf_range(.2, 1.0), 1.5)
+  for child in rock.get_children():
+    child.scale = Vector3(rock_scale, rock_scale, rock_scale)
+  add_child(rock)
   rock.process_mode = PROCESS_MODE_INHERIT
 
 func _on_captcha_3d_solved() -> void:
@@ -59,9 +72,11 @@ func despawn_captcha() -> void:
   create_tween().tween_property(captcha, "scale", Vector3(0.005, 0.005, 0.005), 0.1).finished.connect(func():
     captcha_pin_marker.remove_child(captcha)
     captcha.queue_free()
+    captcha_pin.process_mode = Node.PROCESS_MODE_DISABLED
   )
 
 func spawn_captcha() -> void:
+  captcha_pin.process_mode = Node.PROCESS_MODE_INHERIT
   var puzzle = puzzles[randi() % puzzles.size()]
   var captcha: Captcha3D = captcha_scene.instantiate()
   captcha.connect("solved", _on_captcha_3d_solved)

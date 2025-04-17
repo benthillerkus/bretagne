@@ -6,7 +6,9 @@ class_name Captcha
   set(value):
     texture = value
     emit_changed()
-@export_multiline var prompt: String:
+@export_multiline var prompt: String = """Wähle alle Felder mit einem
+[b]Zwischenraum[/b]
+Falls es keine gibt, klicke [i]überspringen[/i].""":
   set(value):
     prompt = value
     emit_changed()

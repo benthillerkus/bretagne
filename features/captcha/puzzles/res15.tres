@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Captcha" load_steps=3 format=3 uid="uid://8qy8ns18rlaj"]
+
+[ext_resource type="Script" uid="uid://0m11q0crx85g" path="res://features/captcha/captcha.gd" id="1_wknxg"]
+[ext_resource type="Texture2D" uid="uid://f36w2jqkowry" path="res://assets/photos/_MG_1106_DxO_game.jpg" id="2_wknxg"]
+
+[resource]
+script = ExtResource("1_wknxg")
+texture = ExtResource("2_wknxg")
+prompt = "Wähle alle Felder mit einer
+[b]Gondel[/b]
+Falls es keine gibt, klicke [i]überspringen[/i]."
+rows = 3
+columns = 4
+solution = PackedByteArray(2, 6, 7)
+metadata/_custom_type_script = "uid://0m11q0crx85g"

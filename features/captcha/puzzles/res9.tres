@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Captcha" load_steps=3 format=3 uid="uid://d3qimpqj8unvj"]
+
+[ext_resource type="Script" uid="uid://0m11q0crx85g" path="res://features/captcha/captcha.gd" id="1_esgfk"]
+[ext_resource type="Texture2D" uid="uid://bn4jf8stnwbdf" path="res://assets/photos/_MG_1054_DxO_game.jpg" id="2_w032p"]
+
+[resource]
+script = ExtResource("1_esgfk")
+texture = ExtResource("2_w032p")
+prompt = "Wähle alle Felder mit
+[b]Fingernägeln[/b]
+Falls es keine gibt, klicke [i]überspringen[/i]."
+rows = 6
+columns = 6
+solution = PackedByteArray(6, 7, 9, 10, 13, 14, 15, 18, 19, 20, 21, 22, 26)
+metadata/_custom_type_script = "uid://0m11q0crx85g"

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Captcha" load_steps=3 format=3 uid="uid://5uo2wyuqjh75"]
+
+[ext_resource type="Script" uid="uid://0m11q0crx85g" path="res://features/captcha/captcha.gd" id="1_ioaqg"]
+[ext_resource type="Texture2D" uid="uid://dx6ojevto3p5l" path="res://assets/photos/_MG_1023_DxO_game.jpg" id="2_ioaqg"]
+
+[resource]
+script = ExtResource("1_ioaqg")
+texture = ExtResource("2_ioaqg")
+prompt = "Wähle alle Felder mit einem
+[b]Franzosen[/b]
+Falls es keine gibt, klicke [i]überspringen[/i]."
+rows = 4
+columns = 4
+solution = PackedByteArray(2, 6, 10)
+metadata/_custom_type_script = "uid://0m11q0crx85g"

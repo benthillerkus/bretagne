@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Captcha" load_steps=3 format=3 uid="uid://bvfohf7j05mvb"]
+
+[ext_resource type="Script" uid="uid://0m11q0crx85g" path="res://features/captcha/captcha.gd" id="1_mjpfv"]
+[ext_resource type="Texture2D" uid="uid://dm6ped1r7txwm" path="res://assets/photos/_MG_1219_DxO_game.jpg" id="2_7xf1y"]
+
+[resource]
+script = ExtResource("1_mjpfv")
+texture = ExtResource("2_7xf1y")
+prompt = "Wähle alle Felder mit einem
+[b]Schild[/b]
+Falls es keine gibt, klicke [i]überspringen[/i]."
+rows = 3
+columns = 1
+solution = PackedByteArray(0)
+metadata/_custom_type_script = "uid://0m11q0crx85g"

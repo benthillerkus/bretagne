@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="Captcha" load_steps=3 format=3 uid="uid://c2yn78cgpr7jx"]
 
 [ext_resource type="Script" uid="uid://0m11q0crx85g" path="res://features/captcha/captcha.gd" id="1_7n7xo"]
-[ext_resource type="Texture2D" uid="uid://daaoj303tfve8" path="res://assets/photos/Screenshot 2024-03-20 024105.png" id="2_l1d0w"]
+[ext_resource type="Texture2D" uid="uid://ddsnjvara8gy2" path="res://assets/photos/_MG_1028_DxO_game.jpg" id="2_l1d0w"]
 
 [resource]
 script = ExtResource("1_7n7xo")
 texture = ExtResource("2_l1d0w")
-prompt = "Wähle alle Felder mit einer
-[b]Schlagerstarnase[/b]
+prompt = "Wähle alle Felder mit einem
+[b]Tisch[/b]
 Falls es keine gibt, klicke [i]überspringen[/i]."
 rows = 6
 columns = 7

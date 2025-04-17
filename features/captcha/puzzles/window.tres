@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Captcha" load_steps=3 format=3 uid="uid://un4b08a7ep7h"]
+
+[ext_resource type="Script" uid="uid://0m11q0crx85g" path="res://features/captcha/captcha.gd" id="1_pkvat"]
+[ext_resource type="Texture2D" uid="uid://bh2pwik0eeql" path="res://assets/photos/_MG_1031_DxO_game.jpg" id="2_wb2pp"]
+
+[resource]
+script = ExtResource("1_pkvat")
+texture = ExtResource("2_wb2pp")
+prompt = "Wähle alle Felder mit einer
+[b]Broschüre[/b]
+Falls es keine gibt, klicke [i]überspringen[/i]."
+rows = 3
+columns = 3
+solution = PackedByteArray(3, 4)
+metadata/_custom_type_script = "uid://0m11q0crx85g"

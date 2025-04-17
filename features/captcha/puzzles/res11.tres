@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Captcha" load_steps=3 format=3 uid="uid://jhs61250es0p"]
+
+[ext_resource type="Script" uid="uid://0m11q0crx85g" path="res://features/captcha/captcha.gd" id="1_g6x2k"]
+[ext_resource type="Texture2D" uid="uid://c5m0llsy7v3ss" path="res://assets/photos/_MG_1094_DxO_game.jpg" id="2_g6x2k"]
+
+[resource]
+script = ExtResource("1_g6x2k")
+texture = ExtResource("2_g6x2k")
+prompt = "Wähle alle Felder mit
+[b]Mobilfunkempfang[/b]
+Falls es keine gibt, klicke [i]überspringen[/i]."
+rows = 3
+columns = 3
+solution = PackedByteArray(1)
+metadata/_custom_type_script = "uid://0m11q0crx85g"

@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://groo57o27y82"]
+
+[ext_resource type="Script" uid="uid://b5etpqd6tf20w" path="res://assets/seagulls/seagull.gd" id="1_2yjrd"]
+[ext_resource type="PackedScene" uid="uid://ff6qbj76qnq2" path="res://assets/seagulls/seagull.blend" id="1_nsrlc"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2yjrd"]
+radius = 0.134689
+height = 1.15766
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sr5b3"]
+radius = 0.134689
+height = 0.485498
+
+[node name="Seagull" type="RigidBody3D"]
+collision_layer = 7
+collision_mask = 7
+lock_rotation = true
+continuous_cd = true
+script = ExtResource("1_2yjrd")
+
+[node name="WingCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.375, 0)
+shape = SubResource("CapsuleShape3D_2yjrd")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 0.920873, -0.389863, 1.70415e-08, 0.389863, 0.920873, -4.02526e-08, 0, 0.407822, 0.132026)
+shape = SubResource("CapsuleShape3D_2yjrd")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.91069e-15, 4.37114e-08, 1, 0.0356146, -0.999366, 4.36837e-08, 0.999366, 0.0356146, -1.55677e-09, 0, 0.24219, -0.0275645)
+shape = SubResource("CapsuleShape3D_sr5b3")
+
+[node name="seagull" parent="." instance=ExtResource("1_nsrlc")]
+
+[node name="AnimationPlayer" parent="seagull" index="1"]
+autoplay = "SKM_Seagull_ao|SKM_Seagull_ao|ANIM_Seagull_Idle"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="seagull/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="animation_list_changed" from="seagull/AnimationPlayer" to="." method="_on_animation_player_animation_list_changed"]
+
+[editable path="seagull"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cgsfn1yx1qenx"]
+[gd_scene load_steps=26 format=3 uid="uid://cgsfn1yx1qenx"]
 
 [ext_resource type="Script" uid="uid://baekn863wcxe7" path="res://game.gd" id="1_lquwl"]
 [ext_resource type="PackedScene" uid="uid://kmyakts4l64t" path="res://addons/Basic FPS Player/Src/basic_player_head.tscn" id="2_h2yge"]
@@ -8,16 +8,8 @@
 [ext_resource type="Script" uid="uid://3v12mjvun246" path="res://features/hud/out_of_bounds_warning.gd" id="6_4c57u"]
 [ext_resource type="PackedScene" uid="uid://dm4yy7xdyn2wj" path="res://assets/terrain/big_beach/BigBeach.tscn" id="7_5vw27"]
 [ext_resource type="PackedScene" uid="uid://cup1ap1krcuq4" path="res://features/water/water_system.tscn" id="7_272bh"]
-
-[sub_resource type="Animation" id="Animation_4c57u"]
-resource_name = "time_of_day"
-tracks/0/type = "rotation_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, -0.521423, 0.713809, 0.27611, -0.377303, 1, 1, -0.118689, 0.853624, 0.38808, 0.326548)
+[ext_resource type="Script" uid="uid://bgy8wbxx7sh8q" path="res://features/hud/score.gd" id="7_kek77"]
+[ext_resource type="PackedScene" uid="uid://groo57o27y82" path="res://assets/seagulls/seagull.tscn" id="11_efxa6"]
 
 [sub_resource type="Animation" id="Animation_efxa6"]
 length = 0.001
@@ -28,6 +20,16 @@ tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = PackedFloat32Array(0, 1, -0.118689, 0.853624, 0.38808, 0.326548)
+
+[sub_resource type="Animation" id="Animation_4c57u"]
+resource_name = "time_of_day"
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, -0.521423, 0.713809, 0.27611, -0.377303, 1, 1, -0.118689, 0.853624, 0.38808, 0.326548)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dg77c"]
 _data = {
@@ -114,7 +116,7 @@ libraries = {
 environment = SubResource("Environment_7mycd")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.75856, -0.456083, 0.465376, 0.0508222, 0.670615, 0.740063, -0.649619, 0.585033, -0.485522, 0, 4.75, 0.125)
+transform = Transform3D(-0.758559, -0.456085, 0.465376, 0.050822, 0.670614, 0.740063, -0.64962, 0.585033, -0.485521, 0, 4.75, 0.125)
 light_cull_mask = 4294967289
 shadow_enabled = true
 shadow_caster_mask = 4294967289
@@ -194,6 +196,7 @@ offset_right = 145.0
 offset_bottom = 23.0
 text = "0"
 horizontal_alignment = 2
+script = ExtResource("7_kek77")
 
 [node name="CaptchaPin" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.38263, 1.17918, 0)
@@ -253,6 +256,22 @@ shape = SubResource("BoxShape3D_kek77")
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0563726, 1.87914, 15.2626)
 shape = SubResource("BoxShape3D_kek77")
 
+[node name="Seagull" parent="." instance=ExtResource("11_efxa6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.13623, 0.615628, 1.59402)
+
+[node name="Seagull2" parent="." instance=ExtResource("11_efxa6")]
+transform = Transform3D(0.682381, 0, 0.730997, 0, 1, 0, -0.730997, 0, 0.682381, -11.4986, 1.0352, 11.6742)
+
+[node name="Seagull3" parent="." instance=ExtResource("11_efxa6")]
+transform = Transform3D(-0.784971, 0, -0.619533, 0, 1, 0, 0.619533, 0, -0.784971, 12.7087, 1.05421, 4.58466)
+
+[node name="Seagull4" parent="." instance=ExtResource("11_efxa6")]
+transform = Transform3D(0.704944, 0, -0.709263, 0, 1, 0, 0.709263, 0, 0.704944, 13.3906, 1.31263, 13.2732)
+
+[node name="Seagull5" parent="." instance=ExtResource("11_efxa6")]
+transform = Transform3D(-0.225801, 0, -0.974173, 0, 1, 0, 0.974173, 0, -0.225801, 14.2882, 0.503841, -7.67542)
+
+[connection signal="score_changed" from="." to="HUD/Label2" method="_on_main_score_changed"]
 [connection signal="can_pickup" from="Player" to="HUD/PickupPrompt" method="_on_player_can_pickup"]
 [connection signal="body_entered" from="Area3D" to="HUD/OutOfBoundsWarning" method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Area3D" to="HUD/OutOfBoundsWarning" method="_on_area_3d_body_exited"]

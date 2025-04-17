@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Captcha" load_steps=3 format=3 uid="uid://bki3xoheqqe2a"]
+
+[ext_resource type="Script" uid="uid://0m11q0crx85g" path="res://features/captcha/captcha.gd" id="1_jdufy"]
+[ext_resource type="Texture2D" uid="uid://b0yhpeb3siul1" path="res://assets/photos/_MG_0598_DxO_game.jpg" id="2_x3gpa"]
+
+[resource]
+script = ExtResource("1_jdufy")
+texture = ExtResource("2_x3gpa")
+prompt = "Wähle alle Felder mit einer
+[b]Pfeilspitze[/b]
+Falls es keine gibt, klicke [i]überspringen[/i]."
+rows = 6
+columns = 6
+solution = PackedByteArray(7, 9, 13)
+metadata/_custom_type_script = "uid://0m11q0crx85g"

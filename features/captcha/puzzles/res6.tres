@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Captcha" load_steps=3 format=3 uid="uid://ct6864vvgbp2w"]
+
+[ext_resource type="Script" uid="uid://0m11q0crx85g" path="res://features/captcha/captcha.gd" id="1_u187v"]
+[ext_resource type="Texture2D" uid="uid://dewe2gpoe2qu1" path="res://assets/photos/_MG_0970_DxO_game.jpg" id="2_10foa"]
+
+[resource]
+script = ExtResource("1_u187v")
+texture = ExtResource("2_10foa")
+prompt = "Wähle alle Felder mit einem
+[b]Insekt[/b]
+Falls es keine gibt, klicke [i]überspringen[/i]."
+rows = 3
+columns = 3
+solution = PackedByteArray(0, 1, 4, 5, 7)
+metadata/_custom_type_script = "uid://0m11q0crx85g"

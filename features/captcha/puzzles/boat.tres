@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Captcha" load_steps=3 format=3 uid="uid://dd5yg78m3jdpo"]
+
+[ext_resource type="Script" uid="uid://0m11q0crx85g" path="res://features/captcha/captcha.gd" id="1_eosvi"]
+[ext_resource type="Texture2D" uid="uid://db3rfr31ck6hm" path="res://assets/photos/_MG_0883_DxO_game.jpg" id="2_6s78x"]
+
+[resource]
+script = ExtResource("1_eosvi")
+texture = ExtResource("2_6s78x")
+prompt = "Wähle alle Felder mit einem
+[b]Zwischenraum[/b]
+Falls es keine gibt, klicke [i]überspringen[/i]."
+rows = 3
+columns = 3
+solution = PackedByteArray(4, 7)
+metadata/_custom_type_script = "uid://0m11q0crx85g"

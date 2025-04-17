@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Captcha" load_steps=3 format=3 uid="uid://4q3gclx4hl6q"]
+
+[ext_resource type="Script" uid="uid://0m11q0crx85g" path="res://features/captcha/captcha.gd" id="1_eslco"]
+[ext_resource type="Texture2D" uid="uid://d00hef80g558d" path="res://assets/photos/_MG_1520_DxO_game.jpg" id="2_oylqu"]
+
+[resource]
+script = ExtResource("1_eslco")
+texture = ExtResource("2_oylqu")
+prompt = "Wähle alle Felder mit
+[b]Backwaren[/b]
+Falls es keine gibt, klicke [i]überspringen[/i]."
+rows = 3
+columns = 3
+solution = PackedByteArray(3, 4, 5)
+metadata/_custom_type_script = "uid://0m11q0crx85g"
