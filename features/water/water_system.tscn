@@ -63,7 +63,9 @@ subdivide_depth = 511
 
 [sub_resource type="Environment" id="Environment_272bh"]
 background_mode = 1
-ambient_light_source = 1
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 16.0
 reflected_light_source = 1
 
 [node name="WaterSystem" type="Node3D"]
@@ -111,7 +113,10 @@ handle_input_locally = false
 canvas_cull_mask = 4293918720
 size = Vector2i(1024, 1024)
 
-[node name="Camera3D" type="Camera3D" parent="Collision"]
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="Collision"]
+remote_path = NodePath("../..")
+
+[node name="Camera3D" type="Camera3D" parent="Collision/RemoteTransform3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -5, 0)
 keep_aspect = 0
 cull_mask = 2
@@ -126,7 +131,10 @@ handle_input_locally = false
 canvas_cull_mask = 4293918720
 size = Vector2i(1024, 1024)
 
-[node name="Camera3D" type="Camera3D" parent="Terrain"]
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="Terrain"]
+remote_path = NodePath("../..")
+
+[node name="Camera3D" type="Camera3D" parent="Terrain/RemoteTransform3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5, 0)
 keep_aspect = 0
 cull_mask = 4

@@ -59,6 +59,7 @@ void fragment() {
 
 }
 "
+graph_offset = Vector2(-126.474, -132.797)
 modes/depth_draw = 2
 modes/specular = 2
 flags/unshaded = true

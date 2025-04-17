@@ -73,7 +73,7 @@ var head_start_pos : Vector3
 # Current player tick, used in head bob calculation
 var tick = 0
 
-var raycast = 0
+var raycast: RayCast3D
 
 func _ready():
 	if Engine.is_editor_hint():
@@ -86,9 +86,18 @@ func _ready():
 	head_start_pos = $Head.position
 	raycast = $Head/RayCast3D
 
+var _can_pickup = false
+signal can_pickup(state: bool)
+
 func _physics_process(delta):
 	if Engine.is_editor_hint():
 		return
+
+	if position.y < -3:
+		# Reset player position if they fall out of the world
+		position = Vector3(0, 50, 0)
+		velocity = Vector3.ZERO
+		velocity.y = 0
 	
 	# Increment player tick, used in head bob motion
 	tick += 1
@@ -106,7 +115,21 @@ func _physics_process(delta):
 	if carrying:
 		previous_carrying_position = carrying_position
 		carrying_position = carrying.global_position
-	
+
+	if raycast.is_colliding():
+		# Check if the raycast is colliding with a pickupable object
+		if raycast.get_collider().is_in_group("Throwable"):
+			if _can_pickup == false:
+				_can_pickup = true
+				can_pickup.emit(true)
+		else:
+			if _can_pickup == true:
+				_can_pickup = false
+				can_pickup.emit(false)
+	else:
+		if _can_pickup == true:
+			_can_pickup = false
+			can_pickup.emit(false)
 
 var carrying_position
 var previous_carrying_position
@@ -138,20 +161,20 @@ func _input(event):
 func pickup(object: Node3D):
 	object.reparent(head)
 	carrying = object
-	object.on_pickup()
 	object.process_mode = Node.PROCESS_MODE_DISABLED
 	carrying_position = object.global_position
+	raycast.enabled = false
 
 func drop():
 	if carrying:
 		carrying.reparent(get_parent())
-		carrying.on_drop()
 		carrying.process_mode = Node.PROCESS_MODE_INHERIT
 		if carrying is RigidBody3D:
 			carrying.linear_velocity = (carrying_position - previous_carrying_position) / get_process_delta_time() / 4
 		carrying = null
 		carrying_position = Vector3.ZERO
 		previous_carrying_position = Vector3.ZERO
+		raycast.enabled = true
 
 func set_rotation_target(mouse_motion : Vector2):
 	# Add player target to the mouse -x input

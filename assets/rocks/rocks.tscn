@@ -1,0 +1,116 @@
+[gd_scene load_steps=14 format=3 uid="uid://c2seogya3gqkb"]
+
+[ext_resource type="PackedScene" uid="uid://bu7ktoul1xpqx" path="res://assets/rocks/rocks.blend" id="1_tdo5y"]
+[ext_resource type="Shader" uid="uid://dxjo6u37g4ify" path="res://assets/rocks/rock.tres" id="2_e0p71"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_whwjp"]
+render_priority = 0
+shader = ExtResource("2_e0p71")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8fn5i"]
+render_priority = 0
+shader = ExtResource("2_e0p71")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ad131"]
+render_priority = 0
+shader = ExtResource("2_e0p71")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jrsfs"]
+render_priority = 0
+shader = ExtResource("2_e0p71")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qsqhv"]
+render_priority = 0
+shader = ExtResource("2_e0p71")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2lcxa"]
+render_priority = 0
+shader = ExtResource("2_e0p71")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_irrco"]
+render_priority = 0
+shader = ExtResource("2_e0p71")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eunh6"]
+render_priority = 0
+shader = ExtResource("2_e0p71")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t8m3x"]
+render_priority = 0
+shader = ExtResource("2_e0p71")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8nkwp"]
+render_priority = 0
+shader = ExtResource("2_e0p71")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_87uhg"]
+render_priority = 0
+shader = ExtResource("2_e0p71")
+
+[node name="rocks" instance=ExtResource("1_tdo5y")]
+
+[node name="Cube" parent="." index="0" groups=["Throwable"]]
+
+[node name="Cube" parent="Cube" index="0"]
+layers = 3
+surface_material_override/0 = SubResource("ShaderMaterial_whwjp")
+
+[node name="Cube_001" parent="." index="1" groups=["Throwable"]]
+
+[node name="Cube_001" parent="Cube_001" index="0"]
+layers = 3
+surface_material_override/0 = SubResource("ShaderMaterial_8fn5i")
+
+[node name="Cube_002" parent="." index="2" groups=["Throwable"]]
+
+[node name="Cube_002" parent="Cube_002" index="0"]
+layers = 3
+surface_material_override/0 = SubResource("ShaderMaterial_ad131")
+
+[node name="Cube_003" parent="." index="3" groups=["Throwable"]]
+
+[node name="Cube_003" parent="Cube_003" index="0"]
+layers = 3
+surface_material_override/0 = SubResource("ShaderMaterial_jrsfs")
+
+[node name="Cube_004" parent="." index="4" groups=["Throwable"]]
+
+[node name="Cube_004" parent="Cube_004" index="0"]
+layers = 3
+surface_material_override/0 = SubResource("ShaderMaterial_qsqhv")
+
+[node name="Cube_005" parent="." index="5" groups=["Throwable"]]
+
+[node name="Cube_005" parent="Cube_005" index="0"]
+layers = 3
+surface_material_override/0 = SubResource("ShaderMaterial_2lcxa")
+
+[node name="Cube_006" parent="." index="6" groups=["Throwable"]]
+
+[node name="Cube_006" parent="Cube_006" index="0"]
+layers = 3
+surface_material_override/0 = SubResource("ShaderMaterial_irrco")
+
+[node name="Cube_007" parent="." index="7" groups=["Throwable"]]
+
+[node name="Cube_007" parent="Cube_007" index="0"]
+layers = 3
+surface_material_override/0 = SubResource("ShaderMaterial_eunh6")
+
+[node name="Cube_008" parent="." index="8" groups=["Throwable"]]
+
+[node name="Cube_008" parent="Cube_008" index="0"]
+layers = 3
+surface_material_override/0 = SubResource("ShaderMaterial_t8m3x")
+
+[node name="Cube_009" parent="." index="9" groups=["Throwable"]]
+
+[node name="Cube_009" parent="Cube_009" index="0"]
+layers = 3
+surface_material_override/0 = SubResource("ShaderMaterial_8nkwp")
+
+[node name="Cube_010" parent="." index="10" groups=["Throwable"]]
+
+[node name="Cube_010" parent="Cube_010" index="0"]
+layers = 3
+surface_material_override/0 = SubResource("ShaderMaterial_87uhg")

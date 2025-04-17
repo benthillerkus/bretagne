@@ -32,7 +32,8 @@ func _on_puzzle_changed() -> void:
     control.rows = 3
     control.texture = null
   else:
-    instructions.text = puzzle.prompt
+    if puzzle.prompt != null:
+      instructions.text = puzzle.prompt
     control.columns = puzzle.columns
     control.rows = puzzle.rows
     control.texture = puzzle.texture

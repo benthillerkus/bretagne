@@ -44,3 +44,7 @@ func _on_credits_pressed() -> void:
   resume()
   Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
   credits.show()
+
+func _on_restart_pressed() -> void:
+  resume()
+  get_tree().reload_current_scene()

@@ -16,6 +16,7 @@ func _on_puzzle_changed() -> void:
     captcha.puzzle = puzzle
   
 @onready var display: MeshInstance3D = $MeshInstance3D
+@onready var box_mesh: BoxMesh = $Box.mesh
 @onready var display_mesh: QuadMesh = display.mesh
 @onready var viewport: SubViewport = $SubViewport
 @onready var area: Area3D = $Area3D
@@ -31,11 +32,12 @@ var last_mouse_pos_3D = null
 var last_mouse_pos_2D = null
 var camera: Camera3D
 
-var rayparam = PhysicsRayQueryParameters3D.new()
+var rayparam: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
 
 func _ready() -> void:
   rayparam.collide_with_bodies = false
   rayparam.collide_with_areas = true
+  rayparam.collision_mask = 1
   _on_puzzle_changed()
   _update_size()
 
@@ -47,6 +49,7 @@ func _update_size() -> void:
   viewport.size_2d_override = size * 2
   display_mesh.size.x = size.aspect()
   collision_shape.size.x = size.aspect()
+  box_mesh.size.x = size.aspect()
 
 func _unhandled_input(event: InputEvent) -> void:
   if !mouse_inside:
@@ -67,8 +70,18 @@ func _physics_process(_delta: float) -> void:
     return
   var mouse_pos3D = _find_mouse()
   mouse_inside = mouse_pos3D != null
+
   if !mouse_inside:
+    if cursor.visible:
+      var tween = create_tween()
+      tween.tween_property(cursor, "scale", Vector3(0, 0, 0), 0.1)
+      tween.finished.connect(func(): cursor.visible = false)
     return
+  if !cursor.visible:
+      cursor.visible = true
+      var tween = create_tween()
+      tween.tween_property(cursor, "scale", Vector3(1, 1, 1), 0.05)
+
   last_mouse_pos_3D = area.global_transform.affine_inverse() * mouse_pos3D
   cursor.transform.origin = last_mouse_pos_3D
   mesh_size = display_mesh.size
@@ -101,3 +114,16 @@ func _find_mouse():
     return result.position
   else:
     return null
+
+signal solved
+signal failed
+signal skipped
+
+func _on_captcha_2d_solved() -> void:
+  solved.emit()
+
+func _on_captcha_2d_failed() -> void:
+  failed.emit()
+
+func _on_captcha_2d_skipped() -> void:
+  skipped.emit()

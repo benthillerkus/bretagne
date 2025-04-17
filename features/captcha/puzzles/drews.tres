@@ -11,5 +11,5 @@ prompt = "Wähle alle Felder mit dem einzigen
 Falls es keine gibt, klicke [i]überspringen[/i]."
 rows = 4
 columns = 4
-solution = PackedByteArray(0, 5, 9, 11)
+solution = PackedByteArray(0, 1, 4, 5, 6, 8, 9, 10, 12, 13, 14)
 metadata/_custom_type_script = "uid://0m11q0crx85g"

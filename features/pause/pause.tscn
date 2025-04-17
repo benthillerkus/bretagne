@@ -1,6 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://bkp1vmox56or0"]
+[gd_scene load_steps=11 format=3 uid="uid://bkp1vmox56or0"]
 
 [ext_resource type="Script" uid="uid://d2mx17lxyxxg8" path="res://features/pause/pause.gd" id="1_45vjg"]
+[ext_resource type="Texture2D" uid="uid://7cc1syxdnm6b" path="res://assets/hud/continue.png" id="2_t0kyg"]
+[ext_resource type="Texture2D" uid="uid://85i0ajx8n2ac" path="res://assets/hud/logo.png" id="2_wrf7t"]
+[ext_resource type="Texture2D" uid="uid://cg03jtg8w6j3x" path="res://assets/hud/credits.png" id="3_ilyt3"]
+[ext_resource type="Texture2D" uid="uid://b8d5oog0rqjv4" path="res://assets/hud/restart.png" id="4_bkrj5"]
+[ext_resource type="Texture2D" uid="uid://c6arod7tioxeq" path="res://assets/hud/quit.png" id="4_bpikk"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bkrj5"]
+blend_mode = 3
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_t0kyg"]
+blend_mode = 3
+light_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bpikk"]
+blend_mode = 3
+light_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wrf7t"]
+blend_mode = 3
 
 [node name="Pause" type="Control"]
 layout_mode = 3
@@ -23,18 +42,40 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="Resume" type="Button" parent="VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+material = SubResource("CanvasItemMaterial_bkrj5")
 layout_mode = 2
-text = "Fortsetzen"
+texture = ExtResource("2_wrf7t")
 
-[node name="Credits" type="Button" parent="VBoxContainer"]
+[node name="Container" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
-text = "Credits"
 
-[node name="Quit" type="Button" parent="VBoxContainer"]
+[node name="Resume" type="TextureButton" parent="VBoxContainer"]
+material = SubResource("CanvasItemMaterial_t0kyg")
 layout_mode = 2
-text = "Beenden"
+size_flags_horizontal = 4
+texture_normal = ExtResource("2_t0kyg")
+
+[node name="Restart" type="TextureButton" parent="VBoxContainer"]
+material = SubResource("CanvasItemMaterial_t0kyg")
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("4_bkrj5")
+
+[node name="Credits" type="TextureButton" parent="VBoxContainer"]
+material = SubResource("CanvasItemMaterial_bpikk")
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("3_ilyt3")
+
+[node name="Quit" type="TextureButton" parent="VBoxContainer"]
+material = SubResource("CanvasItemMaterial_wrf7t")
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("4_bpikk")
 
 [connection signal="pressed" from="VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="VBoxContainer/Restart" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_credits_pressed"]
 [connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]

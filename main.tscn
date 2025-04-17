@@ -1,16 +1,58 @@
-[gd_scene load_steps=17 format=3 uid="uid://cgsfn1yx1qenx"]
+[gd_scene load_steps=24 format=3 uid="uid://cgsfn1yx1qenx"]
 
 [ext_resource type="Script" uid="uid://baekn863wcxe7" path="res://game.gd" id="1_lquwl"]
 [ext_resource type="PackedScene" uid="uid://kmyakts4l64t" path="res://addons/Basic FPS Player/Src/basic_player_head.tscn" id="2_h2yge"]
 [ext_resource type="Script" uid="uid://di4u2gg06htf6" path="res://addons/Basic FPS Player/Src/basic_player_startup.gd" id="2_kek77"]
 [ext_resource type="PackedScene" uid="uid://bkp1vmox56or0" path="res://features/pause/pause.tscn" id="3_h2yge"]
-[ext_resource type="PackedScene" uid="uid://c4483m7phi100" path="res://features/captcha/captcha_3d.tscn" id="4_1bvp3"]
-[ext_resource type="Resource" uid="uid://cex80oammhue1" path="res://features/captcha/puzzles/drews.tres" id="6_7mycd"]
+[ext_resource type="Script" uid="uid://38j5j6c7n8ud" path="res://features/hud/pickup_prompt.gd" id="5_kek77"]
+[ext_resource type="Script" uid="uid://3v12mjvun246" path="res://features/hud/out_of_bounds_warning.gd" id="6_4c57u"]
 [ext_resource type="PackedScene" uid="uid://dm4yy7xdyn2wj" path="res://assets/terrain/big_beach/BigBeach.tscn" id="7_5vw27"]
 [ext_resource type="PackedScene" uid="uid://cup1ap1krcuq4" path="res://features/water/water_system.tscn" id="7_272bh"]
-[ext_resource type="PackedScene" uid="uid://db5wty83aalcl" path="res://features/rock/rock.tscn" id="9_kek77"]
+
+[sub_resource type="Animation" id="Animation_4c57u"]
+resource_name = "time_of_day"
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, -0.521423, 0.713809, 0.27611, -0.377303, 1, 1, -0.118689, 0.853624, 0.38808, 0.326548)
+
+[sub_resource type="Animation" id="Animation_efxa6"]
+length = 0.001
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, -0.118689, 0.853624, 0.38808, 0.326548)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dg77c"]
+_data = {
+&"RESET": SubResource("Animation_efxa6"),
+&"time_of_day": SubResource("Animation_4c57u")
+}
+
+[sub_resource type="Gradient" id="Gradient_5vw27"]
+offsets = PackedFloat32Array(0.409786, 0.831804, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.791999, 0.791999, 0.791999, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kek77"]
+frequency = 0.0106
+offset = Vector3(-445.45, 0, 0)
+fractal_lacunarity = 2.955
+fractal_gain = 0.315
+fractal_weighted_strength = 0.57
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4c57u"]
+seamless = true
+color_ramp = SubResource("Gradient_5vw27")
+noise = SubResource("FastNoiseLite_kek77")
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_272bh"]
+sky_cover = SubResource("NoiseTexture2D_4c57u")
 ground_bottom_color = Color(0.154823, 0.178501, 0.195903, 1)
 
 [sub_resource type="Sky" id="Sky_lquwl"]
@@ -44,30 +86,43 @@ height = 1.25
 shading_mode = 0
 albedo_color = Color(1, 0, 0, 1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_4c57u"]
+size = Vector3(0.739319, 0.15, 0.292542)
+
 [sub_resource type="FogMaterial" id="FogMaterial_272bh"]
-density = 0.3397
+density = 0.9814
 height_falloff = 3.97337
 edge_fade = 2.26275
 
 [sub_resource type="FogMaterial" id="FogMaterial_5vw27"]
-density = 0.2045
+density = 0.1517
 edge_fade = 1.25533
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kek77"]
+size = Vector3(1.76855, 3.80164, 31.5292)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_lquwl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../DirectionalLight3D")
+libraries = {
+&"": SubResource("AnimationLibrary_dg77c")
+}
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_7mycd")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.0147555, -0.530542, 0.847528, 0.12941, 0.841506, 0.52452, -0.991482, 0.101941, 0.0810749, 0, 4.75, 0.125)
-light_cull_mask = 4294967293
+transform = Transform3D(-0.75856, -0.456083, 0.465376, 0.0508222, 0.670615, 0.740063, -0.649619, 0.585033, -0.485522, 0, 4.75, 0.125)
+light_cull_mask = 4294967289
 shadow_enabled = true
-shadow_caster_mask = 4294967293
+shadow_caster_mask = 4294967289
 directional_shadow_mode = 1
 
 [node name="Player" type="CharacterBody3D" parent="." groups=["Player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.18517, 0)
+collision_layer = 257
 script = ExtResource("2_kek77")
 KEY_BIND_JUMP = "jump"
 metadata/_custom_type_script = "uid://di4u2gg06htf6"
@@ -91,21 +146,84 @@ metadata/_edit_lock_ = true
 layer = 99
 
 [node name="Pause" parent="HUD" instance=ExtResource("3_h2yge")]
+visible = false
 
-[node name="Captcha3D" parent="." instance=ExtResource("4_1bvp3")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.07193, -1.22146)
-puzzle = ExtResource("6_7mycd")
+[node name="PickupPrompt" type="Label" parent="HUD"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "aufheben"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("5_kek77")
+
+[node name="OutOfBoundsWarning" type="Label" parent="HUD"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = -11.5
+offset_right = 69.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "never kill yourself"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("6_4c57u")
+
+[node name="Label" type="Label" parent="HUD"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "menhirmania"
+
+[node name="Label2" type="Label" parent="HUD"]
+offset_left = 111.0
+offset_right = 145.0
+offset_bottom = 23.0
+text = "0"
+horizontal_alignment = 2
+
+[node name="CaptchaPin" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.38263, 1.17918, 0)
+lock_rotation = true
+continuous_cd = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CaptchaPin"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0103455, -0.35, 0.0580139)
+shape = SubResource("BoxShape3D_4c57u")
+
+[node name="Marker3D" type="Marker3D" parent="CaptchaPin"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.47921, 0)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="CaptchaPin"]
+transform = Transform3D(-1, 0, -8.74228e-08, -4.37114e-08, 0.866025, 0.5, 7.57103e-08, 0.5, -0.866025, 0, 0.375, 0.389581)
+light_cull_mask = 4294967289
+distance_fade_enabled = true
+distance_fade_begin = 6.0
+distance_fade_length = 6.0
+spot_angle = 71.3257
 
 [node name="BigBeach" parent="." instance=ExtResource("7_5vw27")]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, -0.625, 0)
-metadata/_edit_lock_ = true
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, -0.34521, 0)
 
 [node name="WaterSystem" parent="." instance=ExtResource("7_272bh")]
 metadata/_edit_lock_ = true
 
 [node name="FogVolume" type="FogVolume" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2247, 0.567526, -14.2039)
-size = Vector3(31.1917, 2.83252, 26.1735)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2247, 0.362753, -14.2039)
+size = Vector3(31.1917, 2.42297, 26.1735)
 material = SubResource("FogMaterial_272bh")
 metadata/_edit_lock_ = true
 
@@ -115,14 +233,26 @@ size = Vector3(31.1917, 2.71603, 15.3006)
 material = SubResource("FogMaterial_5vw27")
 metadata/_edit_lock_ = true
 
-[node name="RigidBody3D" parent="." instance=ExtResource("9_kek77")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.67547, 0.928208, 2.78166)
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 256
+collision_mask = 256
 
-[node name="RigidBody3D2" parent="." instance=ExtResource("9_kek77")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.67547, 0.928208, 3.73224)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.8805, 1.87914, 0.0911026)
+shape = SubResource("BoxShape3D_kek77")
 
-[node name="RigidBody3D3" parent="." instance=ExtResource("9_kek77")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.67547, 0.928208, 5.07602)
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.8423, 1.87914, 0.0911026)
+shape = SubResource("BoxShape3D_kek77")
 
-[node name="RigidBody3D4" parent="." instance=ExtResource("9_kek77")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.00234, 0.928208, 2.78166)
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0563726, 1.87914, -14.7965)
+shape = SubResource("BoxShape3D_kek77")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0563726, 1.87914, 15.2626)
+shape = SubResource("BoxShape3D_kek77")
+
+[connection signal="can_pickup" from="Player" to="HUD/PickupPrompt" method="_on_player_can_pickup"]
+[connection signal="body_entered" from="Area3D" to="HUD/OutOfBoundsWarning" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="HUD/OutOfBoundsWarning" method="_on_area_3d_body_exited"]
